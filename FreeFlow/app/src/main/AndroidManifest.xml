@@ -20,6 +20,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".GridPickerActivity"
+            android:label="@string/title_activity_grid_picker" >
+        </activity>
+        <activity
+            android:name=".TimeTrialPickerActivity"
+            android:label="@string/title_activity_time_trial_picker" >
+        </activity>
+        <activity
+            android:name=".HighScoresActivity"
+            android:label="@string/title_activity_high_scores" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

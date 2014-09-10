@@ -1,5 +1,6 @@
 package com.example.flowflow.freeflow;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,24 +33,32 @@ public class MenuActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Log.d("MenuActivity", "Pressed Play button");
+                Intent intent = new Intent(getApplicationContext(), GridPickerActivity.class);
+                startActivity(intent);
             }
         });
         mTimeTrialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("MenuActivity", "Pressed Time Trial button");
+                Intent intent = new Intent(getApplicationContext(), TimeTrialPickerActivity.class);
+                startActivity(intent);
             }
         });
         mHighScoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("MenuActivity", "Pressed High Scores button");
+                Intent intent = new Intent(getApplicationContext(), HighScoresActivity.class);
+                startActivity(intent);
             }
         });
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("MenuActivity", "Pressed Settings button");
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
