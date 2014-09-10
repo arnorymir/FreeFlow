@@ -11,7 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/play"
         android:onClick="didPressButton"
-    \>
+    />
 
     <Button
         android:id="@+id/timeTrialButton"
@@ -20,7 +20,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/timeTrial"
         android:onClick="didPressButton"
-    \>
+    />
 
     <Button
         android:id="@+id/highScoresButton"
@@ -29,7 +29,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/highScores"
         android:onClick="didPressButton"
-    \>
+    />
 
     <Button
         android:id="@+id/settingsButton"
@@ -38,5 +38,5 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/settings"
         android:onClick="didPressButton"
-    \>
+    />
 </LinearLayout>
