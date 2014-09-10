@@ -2,16 +2,28 @@ package com.example.flowflow.freeflow;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MenuActivity extends ActionBarActivity {
+
+    Button mPlayButton;
+    Button mTimeTrialButton;
+    Button mHighScoresButton;
+    Button mSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        mPlayButton = (Button) findViewById(R.id.playButton);
+        mTimeTrialButton = (Button) findViewById(R.id.timeTrialButton);
+        mHighScoresButton = (Button) findViewById(R.id.highScoresButton);
+        mSettingsButton = (Button) findViewById(R.id.settingsButton);
     }
 
 
@@ -32,5 +44,20 @@ public class MenuActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void didPressButton(View view) {
+        if(view == mPlayButton) {
+            Log.d("MenuActivity", "Pressed Play button");
+        }
+        else if(view == mTimeTrialButton) {
+            Log.d("MenuActivity", "Pressed Time Trial button");
+        }
+        else if(view == mHighScoresButton) {
+            Log.d("MenuActivity", "Pressed High Scores button");
+        }
+        else if(view == mSettingsButton) {
+            Log.d("MenuActivity", "Pressed Settings button");
+        }
     }
 }
