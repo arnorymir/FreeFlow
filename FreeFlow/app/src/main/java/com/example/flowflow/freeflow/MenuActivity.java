@@ -20,10 +20,38 @@ public class MenuActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        // Extract the buttons from the view
         mPlayButton = (Button) findViewById(R.id.playButton);
         mTimeTrialButton = (Button) findViewById(R.id.timeTrialButton);
         mHighScoresButton = (Button) findViewById(R.id.highScoresButton);
         mSettingsButton = (Button) findViewById(R.id.settingsButton);
+
+        // Assign onClick listeners to the buttons
+        mPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("MenuActivity", "Pressed Play button");
+            }
+        });
+        mTimeTrialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("MenuActivity", "Pressed Time Trial button");
+            }
+        });
+        mHighScoresButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("MenuActivity", "Pressed High Scores button");
+            }
+        });
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("MenuActivity", "Pressed Settings button");
+            }
+        });
     }
 
 
@@ -44,20 +72,5 @@ public class MenuActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void didPressButton(View view) {
-        if(view == mPlayButton) {
-            Log.d("MenuActivity", "Pressed Play button");
-        }
-        else if(view == mTimeTrialButton) {
-            Log.d("MenuActivity", "Pressed Time Trial button");
-        }
-        else if(view == mHighScoresButton) {
-            Log.d("MenuActivity", "Pressed High Scores button");
-        }
-        else if(view == mSettingsButton) {
-            Log.d("MenuActivity", "Pressed Settings button");
-        }
     }
 }

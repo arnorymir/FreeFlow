@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/play"
-        android:onClick="didPressButton"
     />
 
     <Button
@@ -19,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/timeTrial"
-        android:onClick="didPressButton"
     />
 
     <Button
@@ -28,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/highScores"
-        android:onClick="didPressButton"
     />
 
     <Button
@@ -37,6 +34,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/settings"
-        android:onClick="didPressButton"
     />
 </LinearLayout>
