@@ -2,6 +2,7 @@ package com.example.flowflow.freeflow;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -32,7 +33,14 @@ public class Board extends View {
     public Board(Context context, AttributeSet attrs, int size) {
         super(context, attrs);
         mSize = size;
-        // TODO: Implement
+        mPaintGrid.setStyle(Paint.Style.STROKE);
+        mPaintGrid.setColor(Color.GRAY);
+        mPaintPath.setStyle(Paint.Style.STROKE);
+        mPaintPath.setColor(Color.GREEN);
+        mPaintPath.setStrokeWidth(32);
+        mPaintPath.setStrokeCap(Paint.Cap.ROUND);
+        mPaintPath.setStrokeJoin(Paint.Join.ROUND);
+        mPaintPath.setAntiAlias(true);
     }
 
     // Methods to map screen coordinates to grid cells
