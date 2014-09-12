@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by arnorymir on 12/09/14.
  */
-public class Cellpath {
+public class CellPath {
 
     private ArrayList<Coordinate> mPath = new ArrayList<Coordinate>();
 
