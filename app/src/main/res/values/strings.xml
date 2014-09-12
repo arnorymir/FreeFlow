@@ -11,5 +11,6 @@
     <string name="title_activity_grid_picker">GridPickerActivity</string>
     <string name="title_activity_time_trial_picker">TimeTrialPickerActivity</string>
     <string name="title_activity_high_scores">HighScoresActivity</string>
+    <string name="title_activity_play">PlayActivity</string>
 
 </resources>

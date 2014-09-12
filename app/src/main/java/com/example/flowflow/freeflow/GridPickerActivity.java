@@ -1,9 +1,12 @@
 package com.example.flowflow.freeflow;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class GridPickerActivity extends ActionBarActivity {
@@ -12,6 +15,28 @@ public class GridPickerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_picker);
+
+        // These buttons are here temporarily to allow us to get to the PlayActivity
+        Button fourButton = (Button) findViewById(R.id.fourByFour);
+        Button fiveButton = (Button) findViewById(R.id.fiveByFive);
+
+        // Set onClick listeners
+        fourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
+                intent.putExtra("BoardSize", 4);
+                startActivity(intent);
+            }
+        });
+        fiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
+                intent.putExtra("BoardSize", 5);
+                startActivity(intent);
+            }
+        });
     }
 
 

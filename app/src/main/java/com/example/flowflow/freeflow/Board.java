@@ -17,7 +17,7 @@ import java.util.List;
 public class Board extends View {
 
     // Dimensions of the board
-    private int mSize = 4;
+    private int mSize;
 
     // Cell dimensions
     private int mCellWidth;
