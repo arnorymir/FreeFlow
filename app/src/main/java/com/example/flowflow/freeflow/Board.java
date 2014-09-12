@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.List;
@@ -32,7 +34,6 @@ public class Board extends View {
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //mSize = size;
         mPaintGrid.setStyle(Paint.Style.STROKE);
         mPaintGrid.setColor(Color.GRAY);
         mPaintPath.setStyle(Paint.Style.STROKE);
@@ -106,5 +107,36 @@ public class Board extends View {
             }
         }
         canvas.drawPath(mPath, mPaintPath);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        int c = xToCol(x);
+        int r = yToRow(y);
+
+        if (c >= mSize || r >= mSize) {
+            return true;
+        }
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mCellPath.reset();
+            mCellPath.append(new Coordinate(c, r));
+        }
+        else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (!mCellPath.isEmpty()) {
+                List<Coordinate> coordinateList = mCellPath.getCoordinates();
+                Coordinate last = coordinateList.get(coordinateList.size()-1);
+                if (areNeighbours(last.getCol(),last.getRow(), c, r)) {
+                    mCellPath.append(new Coordinate(c, r));
+                    invalidate();
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean areNeighbours(int c1, int r1, int c2, int r2) {
+        return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
 }

@@ -9,7 +9,7 @@ public class Coordinate {
     private int mCol;
 
     // Constructor
-    Coordinate(int row, int col) {
+    Coordinate(int col, int row) {
         mRow = row;
         mCol = col;
     }
