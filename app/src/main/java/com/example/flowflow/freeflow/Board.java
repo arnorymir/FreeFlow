@@ -17,22 +17,22 @@ import java.util.List;
 public class Board extends View {
 
     // Dimensions of the board
-    private int mSize;
+    private int mSize = 4;
 
     // Cell dimensions
     private int mCellWidth;
     private int mCellHeight;
 
-    private Rect mRect;
-    private Paint mPaintGrid;
-    private Paint mPaintPath;
-    private Path mPath;
+    private Rect mRect = new Rect();
+    private Paint mPaintGrid = new Paint();
+    private Paint mPaintPath = new Paint();
+    private Path mPath = new Path();
 
     private CellPath mCellPath = new CellPath();
 
-    public Board(Context context, AttributeSet attrs, int size) {
+    public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mSize = size;
+        //mSize = size;
         mPaintGrid.setStyle(Paint.Style.STROKE);
         mPaintGrid.setColor(Color.GRAY);
         mPaintPath.setStyle(Paint.Style.STROKE);
@@ -41,6 +41,10 @@ public class Board extends View {
         mPaintPath.setStrokeCap(Paint.Cap.ROUND);
         mPaintPath.setStrokeJoin(Paint.Join.ROUND);
         mPaintPath.setAntiAlias(true);
+    }
+
+    public void setSize(int size) {
+        mSize = size;
     }
 
     // Methods to map screen coordinates to grid cells
