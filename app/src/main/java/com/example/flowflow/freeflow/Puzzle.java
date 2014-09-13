@@ -1,7 +1,10 @@
 package com.example.flowflow.freeflow;
 
+
+import android.util.Log;
+
 import java.util.Arrays;
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created by bjornorri on 13/09/14.
@@ -10,26 +13,23 @@ public class Puzzle {
 
     private int mSize;
     private int mNumColors;
+    private Dot[] mDots;
 
-    // Each color is assigned an integer. The map contains the dots for each color.
-    private Map<Integer, Coordinate[]> mDots;
-
-    // Constructor is given the size, number of colors and the locations of the dots.
-    // The dots come in pairs, so dots 1 and 2 belong to one color, 3 and 4 to another color etc...
-    public Puzzle(int size, Coordinate[] dots) {
+    public Puzzle(int size, int numColors, Dot[] dots) {
         mSize = size;
-        mNumColors = dots.length / 2;
-        for (int i = 0; i < mNumColors; i += 2) {
-            int colorNo = i / 2;
-            mDots.put(colorNo, Arrays.copyOfRange(dots, i, i + 1));
-        }
+        mNumColors = numColors;
+        mDots = dots;
     }
 
     public int getSize() {
         return mSize;
     }
 
-    public int getNumColors() {
+    public int getNumberOfColors() {
         return mNumColors;
+    }
+
+    public Dot[] getDots() {
+        return mDots;
     }
 }
