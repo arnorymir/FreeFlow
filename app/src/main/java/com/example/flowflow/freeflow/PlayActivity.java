@@ -2,6 +2,7 @@ package com.example.flowflow.freeflow;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +17,11 @@ public class PlayActivity extends ActionBarActivity {
         setContentView(R.layout.activity_play);
         mBoard = (Board) findViewById(R.id.playBoard);
         int size = getIntent().getExtras().getInt("BoardSize");
-        mBoard.setSize(size);
+
+        // Create example puzzle instance
+        Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(2, 3, 0), new Dot(1, 1, 1), new Dot(3, 3, 1)};
+        Puzzle puzzle = new Puzzle(size, 2, dots);
+        mBoard.setPuzzle(puzzle);
     }
 
 

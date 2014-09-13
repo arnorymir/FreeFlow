@@ -11,12 +11,15 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by bjornorri on 12/09/14.
  */
 public class Board extends View {
+
+    private Puzzle mPuzzle;
 
     // Dimensions of the board
     private int mSize;
@@ -27,6 +30,7 @@ public class Board extends View {
 
     private Rect mRect = new Rect();
     private Paint mPaintGrid = new Paint();
+    private Paint mPaintDots = new Paint();
     private Paint mPaintPath = new Paint();
     private Path mPath = new Path();
 
@@ -36,6 +40,7 @@ public class Board extends View {
         super(context, attrs);
         mPaintGrid.setStyle(Paint.Style.STROKE);
         mPaintGrid.setColor(Color.GRAY);
+        mPaintDots.setStyle(Paint.Style.FILL);
         mPaintPath.setStyle(Paint.Style.STROKE);
         mPaintPath.setColor(Color.GREEN);
         mPaintPath.setStrokeWidth(32);
@@ -44,8 +49,9 @@ public class Board extends View {
         mPaintPath.setAntiAlias(true);
     }
 
-    public void setSize(int size) {
-        mSize = size;
+    public void setPuzzle(Puzzle puzzle) {
+        mPuzzle = puzzle;
+        mSize = puzzle.getSize();
     }
 
     // Methods to map screen coordinates to grid cells
@@ -94,6 +100,12 @@ public class Board extends View {
                 canvas.drawRect(mRect, mPaintGrid);
             }
         }
+
+        // Draw the dots.
+        Dot[] dots = mPuzzle.getDots();
+        for (Dot dot : dots) {
+            drawDot(canvas, dot);
+        }
         mPath.reset();
         if (!mCellPath.isEmpty()) {
             List<Coordinate> colist = mCellPath.getCoordinates();
@@ -134,6 +146,14 @@ public class Board extends View {
             }
         }
         return true;
+    }
+
+    private void drawDot(Canvas canvas, Dot dot) {
+        int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
+        mPaintDots.setColor(colors[dot.getColorID()]);
+        Coordinate c = dot.getCell();
+        canvas.drawCircle(colToX(c.getCol()) + mCellWidth / 2, rowToY(c.getRow()) + mCellHeight / 2,
+                mCellWidth / 3, mPaintDots);
     }
 
     private boolean areNeighbours(int c1, int r1, int c2, int r2) {

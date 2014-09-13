@@ -13,6 +13,11 @@ public class Dot {
         mColorID = colorID;
     }
 
+    public Dot(int x, int y, int colorID) {
+        mCell = new Coordinate(x, y);
+        mColorID = colorID;
+    }
+
     public Coordinate getCell() {
         return mCell;
     }
