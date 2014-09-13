@@ -21,6 +21,8 @@ public class Board extends View {
 
     private Puzzle mPuzzle;
 
+    private int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
+
     // Dimensions of the board
     private int mSize;
 
@@ -132,8 +134,13 @@ public class Board extends View {
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mCellPath.reset();
-            mCellPath.append(new Coordinate(c, r));
+            Coordinate coordinate = new Coordinate(c, r);
+            Dot dot = mPuzzle.getDotAtCoordinate(coordinate);
+            if(dot != null) {
+                mPaintPath.setColor(colors[dot.getColorID()]);
+                mCellPath.reset();
+                mCellPath.append(new Coordinate(c, r));
+            }
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if (!mCellPath.isEmpty()) {
@@ -149,7 +156,6 @@ public class Board extends View {
     }
 
     private void drawDot(Canvas canvas, Dot dot) {
-        int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
         mPaintDots.setColor(colors[dot.getColorID()]);
         Coordinate c = dot.getCell();
         canvas.drawCircle(colToX(c.getCol()) + mCellWidth / 2, rowToY(c.getRow()) + mCellHeight / 2,

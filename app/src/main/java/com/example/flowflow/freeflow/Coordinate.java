@@ -30,6 +30,6 @@ public class Coordinate {
             return false;
         }
         Coordinate otherCoordinate = (Coordinate) other;
-        return otherCoordinate.getCol() == this.getCol()&& otherCoordinate.getRow() == this.getRow();
+        return otherCoordinate.getCol() == this.getCol() && otherCoordinate.getRow() == this.getRow();
     }
 }
