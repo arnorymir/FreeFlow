@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.Button;
 
 
+
 public class GridPickerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_picker);
 
@@ -38,7 +40,6 @@ public class GridPickerActivity extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
