@@ -36,7 +36,7 @@ public class Board extends View {
 
 
     private Dot[] mDots;
-    private CellPath mCellPath = new CellPath();
+    private CellPath[] mCellPaths;
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -54,6 +54,10 @@ public class Board extends View {
     public void setPuzzle(Puzzle puzzle) {
         mSize = puzzle.getSize();
         mDots = puzzle.getDots();
+        mCellPaths = new CellPath[puzzle.getNumberOfColors()];
+        for(int i = 0; i < mCellPaths.length; i++) {
+            mCellPaths[i] = new CellPath();
+        }
     }
 
     // Methods to map screen coordinates to grid cells
@@ -108,8 +112,8 @@ public class Board extends View {
             drawDot(canvas, dot);
         }
         mPath.reset();
-        if (!mCellPath.isEmpty()) {
-            List<Coordinate> colist = mCellPath.getCoordinates();
+        if (!mCellPaths[0].isEmpty()) {
+            List<Coordinate> colist = mCellPaths[0].getCoordinates();
             Coordinate co = colist.get(0);
             mPath.moveTo(colToX(co.getCol()) + mCellWidth / 2,
                     rowToY(co.getRow()) + mCellHeight / 2);
@@ -137,16 +141,16 @@ public class Board extends View {
             Dot dot = getDotAtCoordinate(coordinate);
             if(dot != null) {
                 mPaintPath.setColor(colors[dot.getColorID()]);
-                mCellPath.reset();
-                mCellPath.append(new Coordinate(c, r));
+                mCellPaths[0].reset();
+                mCellPaths[0].append(new Coordinate(c, r));
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (!mCellPath.isEmpty()) {
-                List<Coordinate> coordinateList = mCellPath.getCoordinates();
+            if (!mCellPaths[0].isEmpty()) {
+                List<Coordinate> coordinateList = mCellPaths[0].getCoordinates();
                 Coordinate last = coordinateList.get(coordinateList.size()-1);
                 if (areNeighbours(last.getCol(),last.getRow(), c, r)) {
-                    mCellPath.append(new Coordinate(c, r));
+                    mCellPaths[0].append(new Coordinate(c, r));
                     invalidate();
                 }
             }
