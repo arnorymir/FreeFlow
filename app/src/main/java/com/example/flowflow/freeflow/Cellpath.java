@@ -9,6 +9,11 @@ import java.util.List;
 public class CellPath {
 
     private ArrayList<Coordinate> mPath = new ArrayList<Coordinate>();
+    private int mColorID;
+
+    public CellPath(int colorID) {
+        mColorID = colorID;
+    }
 
     public void append(Coordinate coordinate) {
         int index = mPath.indexOf(coordinate);
