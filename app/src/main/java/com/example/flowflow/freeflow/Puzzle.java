@@ -33,12 +33,4 @@ public class Puzzle {
         return mDots;
     }
 
-    public Dot getDotAtCoordinate(Coordinate c) {
-        for(Dot dot : mDots) {
-            if(dot.getCell().equals(c)) {
-                return dot;
-            }
-        }
-        return null;
-    }
 }

@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class Board extends View {
 
-    private Puzzle mPuzzle;
-
     private int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
 
     // Dimensions of the board
@@ -36,6 +34,8 @@ public class Board extends View {
     private Paint mPaintPath = new Paint();
     private Path mPath = new Path();
 
+
+    private Dot[] mDots;
     private CellPath mCellPath = new CellPath();
 
     public Board(Context context, AttributeSet attrs) {
@@ -52,8 +52,8 @@ public class Board extends View {
     }
 
     public void setPuzzle(Puzzle puzzle) {
-        mPuzzle = puzzle;
         mSize = puzzle.getSize();
+        mDots = puzzle.getDots();
     }
 
     // Methods to map screen coordinates to grid cells
@@ -104,8 +104,7 @@ public class Board extends View {
         }
 
         // Draw the dots.
-        Dot[] dots = mPuzzle.getDots();
-        for (Dot dot : dots) {
+        for (Dot dot : mDots) {
             drawDot(canvas, dot);
         }
         mPath.reset();
@@ -135,7 +134,7 @@ public class Board extends View {
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Coordinate coordinate = new Coordinate(c, r);
-            Dot dot = mPuzzle.getDotAtCoordinate(coordinate);
+            Dot dot = getDotAtCoordinate(coordinate);
             if(dot != null) {
                 mPaintPath.setColor(colors[dot.getColorID()]);
                 mCellPath.reset();
@@ -164,5 +163,14 @@ public class Board extends View {
 
     private boolean areNeighbours(int c1, int r1, int c2, int r2) {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
+    }
+
+    public Dot getDotAtCoordinate(Coordinate c) {
+        for(Dot dot : mDots) {
+            if(dot.getCell().equals(c)) {
+                return dot;
+            }
+        }
+        return null;
     }
 }
