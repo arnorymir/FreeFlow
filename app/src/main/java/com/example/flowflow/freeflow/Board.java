@@ -32,8 +32,6 @@ public class Board extends View {
     private Paint mPaintGrid = new Paint();
     private Paint mPaintDots = new Paint();
     private Paint mPaintPath = new Paint();
-    private Path mPath = new Path();
-
 
     private Dot[] mDots;
     private CellPath[] mCellPaths;
@@ -56,7 +54,7 @@ public class Board extends View {
         mDots = puzzle.getDots();
         mCellPaths = new CellPath[puzzle.getNumberOfColors()];
         for(int i = 0; i < mCellPaths.length; i++) {
-            mCellPaths[i] = new CellPath();
+            mCellPaths[i] = new CellPath(i);
         }
     }
 
@@ -108,22 +106,14 @@ public class Board extends View {
         }
 
         // Draw the dots.
-        for (Dot dot : mDots) {
+        for(Dot dot : mDots) {
             drawDot(canvas, dot);
         }
-        mPath.reset();
-        if (!mCellPaths[0].isEmpty()) {
-            List<Coordinate> colist = mCellPaths[0].getCoordinates();
-            Coordinate co = colist.get(0);
-            mPath.moveTo(colToX(co.getCol()) + mCellWidth / 2,
-                    rowToY(co.getRow()) + mCellHeight / 2);
-            for (int i = 1; i < colist.size(); i++) {
-                co = colist.get(i);
-                mPath.lineTo(colToX(co.getCol()) + mCellWidth / 2,
-                        rowToY(co.getRow()) + mCellHeight / 2 );
-            }
+
+        // Draw the cell paths.
+        for(CellPath cellPath : mCellPaths) {
+            drawCellPath(canvas, cellPath);
         }
-        canvas.drawPath(mPath, mPaintPath);
     }
 
     @Override
@@ -133,14 +123,13 @@ public class Board extends View {
         int c = xToCol(x);
         int r = yToRow(y);
 
-        if (c >= mSize || r >= mSize) {
+        if (c >= mSize || r >= mSize || c < 0 || r < 0) {
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Coordinate coordinate = new Coordinate(c, r);
             Dot dot = getDotAtCoordinate(coordinate);
             if(dot != null) {
-                mPaintPath.setColor(colors[dot.getColorID()]);
                 mCellPaths[0].reset();
                 mCellPaths[0].append(new Coordinate(c, r));
             }
@@ -163,6 +152,23 @@ public class Board extends View {
         Coordinate c = dot.getCell();
         canvas.drawCircle(colToX(c.getCol()) + mCellWidth / 2, rowToY(c.getRow()) + mCellHeight / 2,
                 mCellWidth / 3, mPaintDots);
+    }
+
+    private void drawCellPath(Canvas canvas, CellPath cellPath) {
+        if (!cellPath.isEmpty()) {
+            Path path = new Path();
+            List<Coordinate> colist = cellPath.getCoordinates();
+            Coordinate co = colist.get(0);
+            path.moveTo(colToX(co.getCol()) + mCellWidth / 2,
+                    rowToY(co.getRow()) + mCellHeight / 2);
+            for (int i = 1; i < colist.size(); i++) {
+                co = colist.get(i);
+                path.lineTo(colToX(co.getCol()) + mCellWidth / 2,
+                        rowToY(co.getRow()) + mCellHeight / 2 );
+            }
+            mPaintPath.setColor(colors[cellPath.getColorID()]);
+            canvas.drawPath(path, mPaintPath);
+        }
     }
 
     private boolean areNeighbours(int c1, int r1, int c2, int r2) {

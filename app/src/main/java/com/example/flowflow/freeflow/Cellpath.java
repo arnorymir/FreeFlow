@@ -38,4 +38,8 @@ public class CellPath {
     public boolean isEmpty() {
         return mPath.isEmpty();
     }
+
+    public int getColorID() {
+        return mColorID;
+    }
 }
