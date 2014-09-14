@@ -144,7 +144,19 @@ public class Board extends View {
                     List<Coordinate> coordinateList = mActiveCellPath.getCoordinates();
                     Coordinate last = coordinateList.get(coordinateList.size()-1);
                     if (areNeighbours(last.getCol(),last.getRow(), c, r)) {
-                        mActiveCellPath.append(new Coordinate(c, r));
+                        CellPath cellPathAtCoordinate = getCellPathAtCoordinate(coordinate);
+                        if(cellPathAtCoordinate == null || cellPathAtCoordinate == mActiveCellPath) {
+                            Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
+                            if(dotAtCoordinate == null || dotAtCoordinate.getColorID() == mActiveCellPath.getColorID()) {
+                                mActiveCellPath.append(new Coordinate(c, r));
+                                if(dotAtCoordinate != null) {
+                                    if(dotAtCoordinate.getColorID() == mActiveCellPath.getColorID() &&
+                                            !coordinate.equals(mActiveCellPath.getCoordinates().get(0))) {
+                                        mActiveCellPath = null;
+                                    }
+                                }
+                            }
+                        }
                         invalidate();
                     }
                 }

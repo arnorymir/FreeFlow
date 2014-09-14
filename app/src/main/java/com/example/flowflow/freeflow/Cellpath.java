@@ -16,15 +16,8 @@ public class CellPath {
     }
 
     public void append(Coordinate coordinate) {
-        int index = mPath.indexOf(coordinate);
-        if (index >= 0) {
-            for (int i=mPath.size()-1; i > index; --i) {
-                mPath.remove(i);
-            }
-        }
-        else {
-            mPath.add(coordinate);
-        }
+        popToCoordinate(coordinate);
+        mPath.add(coordinate);
     }
 
     public List<Coordinate> getCoordinates() {
@@ -41,5 +34,14 @@ public class CellPath {
 
     public int getColorID() {
         return mColorID;
+    }
+
+    public void popToCoordinate(Coordinate coordinate) {
+        int index = mPath.indexOf(coordinate);
+        if(index >= 0) {
+            for (int i=mPath.size()-1; i > index; --i) {
+                mPath.remove(i);
+            }
+        }
     }
 }
