@@ -1,5 +1,7 @@
 package com.example.flowflow.freeflow;
 
+import android.util.Log;
+
 /**
  * Created by bjornorri on 12/09/14.
  */

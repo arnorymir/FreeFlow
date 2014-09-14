@@ -35,6 +35,7 @@ public class Board extends View {
 
     private Dot[] mDots;
     private CellPath[] mCellPaths;
+    private CellPath mActiveCellPath = null;
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -126,23 +127,31 @@ public class Board extends View {
         if (c >= mSize || r >= mSize || c < 0 || r < 0) {
             return true;
         }
+        Coordinate coordinate = new Coordinate(c, r);
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Coordinate coordinate = new Coordinate(c, r);
-            Dot dot = getDotAtCoordinate(coordinate);
-            if(dot != null) {
-                mCellPaths[0].reset();
-                mCellPaths[0].append(new Coordinate(c, r));
+            CellPath cellPath = getCellPathAtCoordinate(coordinate);
+            if(cellPath != null) {
+                if(containsDot(coordinate)) {
+                    cellPath.reset();
+                }
+                cellPath.append(new Coordinate(c, r));
+                mActiveCellPath = cellPath;
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (!mCellPaths[0].isEmpty()) {
-                List<Coordinate> coordinateList = mCellPaths[0].getCoordinates();
-                Coordinate last = coordinateList.get(coordinateList.size()-1);
-                if (areNeighbours(last.getCol(),last.getRow(), c, r)) {
-                    mCellPaths[0].append(new Coordinate(c, r));
-                    invalidate();
+            if(mActiveCellPath != null) {
+                if (!mActiveCellPath.isEmpty()) {
+                    List<Coordinate> coordinateList = mActiveCellPath.getCoordinates();
+                    Coordinate last = coordinateList.get(coordinateList.size()-1);
+                    if (areNeighbours(last.getCol(),last.getRow(), c, r)) {
+                        mActiveCellPath.append(new Coordinate(c, r));
+                        invalidate();
+                    }
                 }
             }
+        }
+        else if(event.getAction() == MotionEvent.ACTION_UP) {
+            mActiveCellPath = null;
         }
         return true;
     }
@@ -175,12 +184,40 @@ public class Board extends View {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
 
-    public Dot getDotAtCoordinate(Coordinate c) {
+    private Dot getDotAtCoordinate(Coordinate c) {
         for(Dot dot : mDots) {
             if(dot.getCell().equals(c)) {
                 return dot;
             }
         }
         return null;
+    }
+
+    private CellPath getCellPathForColorID(int colorID) {
+        return mCellPaths[colorID];
+    }
+
+    private CellPath getCellPathAtCoordinate(Coordinate coordinate) {
+        for(CellPath cellPath : mCellPaths) {
+            List<Coordinate> coordinates = cellPath.getCoordinates();
+            if(coordinates.contains(coordinate)) {
+                return cellPath;
+            }
+        }
+        Dot dot = getDotAtCoordinate(coordinate);
+        if(dot != null) {
+            int colorID = dot.getColorID();
+            return getCellPathForColorID(colorID);
+        }
+        return null;
+    }
+
+    private boolean containsDot(Coordinate coordinate) {
+        for(Dot dot : mDots) {
+            if(dot.getCell().equals(coordinate)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
