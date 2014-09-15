@@ -56,4 +56,8 @@ public class CellPath {
     public Coordinate getLastCoordinate() {
         return mPath.get(mPath.size() - 1);
     }
+
+    public int length() {
+        return mPath.size();
+    }
 }

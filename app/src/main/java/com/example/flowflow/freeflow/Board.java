@@ -59,6 +59,15 @@ public class Board extends View {
         }
     }
 
+    // Returns the number of cells occupied by cell paths.
+    public int numberOfOccupiedCells() {
+        int count = 0;
+        for(CellPath cellPath : mCellPaths) {
+            count += cellPath.length();
+        }
+        return count;
+    }
+
     // Methods to map screen coordinates to grid cells
     private int xToCol(int x) {
         return (x - getPaddingLeft()) / mCellWidth;
@@ -170,6 +179,7 @@ public class Board extends View {
             }
         }
         invalidate();
+        ((PlayActivity)getContext()).update();
         return true;
     }
 

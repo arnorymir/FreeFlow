@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
+    private Game mGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class PlayActivity extends ActionBarActivity {
         Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(0, size - 1, 0), new Dot(1, 0, 1), new Dot(1, size - 1, 1), new Dot(2, 0, 2), new Dot(size-1, size - 1, 2)};
         Puzzle puzzle = new Puzzle(size, dots);
         mBoard.setPuzzle(puzzle);
+        mGame = new Game(puzzle);
     }
 
 
@@ -42,5 +45,12 @@ public class PlayActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void update() {
+        mGame.setOccupiedCells(mBoard.numberOfOccupiedCells());
+        if(mGame.isWon()) {
+            Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
