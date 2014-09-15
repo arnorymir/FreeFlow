@@ -1,5 +1,7 @@
 package com.example.flowflow.freeflow;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,6 @@ public class CellPath {
     }
 
     public void append(Coordinate coordinate) {
-        popToCoordinate(coordinate);
         mPath.add(coordinate);
     }
 
@@ -36,12 +37,23 @@ public class CellPath {
         return mColorID;
     }
 
-    public void popToCoordinate(Coordinate coordinate) {
+    public void popPastCoordinate(Coordinate coordinate) {
         int index = mPath.indexOf(coordinate);
         if(index >= 0) {
-            for (int i=mPath.size()-1; i > index; --i) {
+            for (int i=mPath.size()-1; i > index - 1; --i) {
                 mPath.remove(i);
             }
         }
+    }
+
+    public Coordinate getFirstCoordinate() {
+        if(!isEmpty()) {
+            return mPath.get(0);
+        }
+        return null;
+    }
+
+    public Coordinate getLastCoordinate() {
+        return mPath.get(mPath.size() - 1);
     }
 }

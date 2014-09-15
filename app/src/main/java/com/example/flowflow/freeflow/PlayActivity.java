@@ -19,8 +19,8 @@ public class PlayActivity extends ActionBarActivity {
         int size = getIntent().getExtras().getInt("BoardSize");
 
         // Create example puzzle instance
-        Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(2, 3, 0), new Dot(1, 1, 1), new Dot(3, 3, 1), new Dot(3, 0, 2), new Dot(2, 0, 2)};
-        Puzzle puzzle = new Puzzle(size, 3, dots);
+        Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(0, size - 1, 0), new Dot(1, 0, 1), new Dot(1, size - 1, 1), new Dot(2, 0, 2), new Dot(size-1, size - 1, 2)};
+        Puzzle puzzle = new Puzzle(size, dots);
         mBoard.setPuzzle(puzzle);
     }
 

@@ -15,9 +15,9 @@ public class Puzzle {
     private int mNumColors;
     private Dot[] mDots;
 
-    public Puzzle(int size, int numColors, Dot[] dots) {
+    public Puzzle(int size, Dot[] dots) {
         mSize = size;
-        mNumColors = numColors;
+        mNumColors = dots.length / 2;
         mDots = dots;
     }
 
