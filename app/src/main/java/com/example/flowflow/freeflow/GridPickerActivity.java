@@ -1,65 +1,54 @@
 package com.example.flowflow.freeflow;
-
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
 
+public class GridPickerActivity extends FragmentActivity {
 
+    private ViewPager viewPager;
+    private ActionBar actionBar;
+    // Tab titles
 
-
-
-public class GridPickerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_picker);
 
-        // These buttons are here temporarily to allow us to get to the PlayActivity
-        Button fourButton = (Button) findViewById(R.id.fourByFour);
-        Button fiveButton = (Button) findViewById(R.id.fiveByFive);
+        // Initilization
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
 
-        // Set onClick listeners
-        fourButton.setOnClickListener(new View.OnClickListener() {
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+
+        /**
+         * on swiping the viewpager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
-                intent.putExtra("BoardSize", 4);
-                startActivity(intent);
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
             }
         });
-        fiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
-                intent.putExtra("BoardSize", 5);
-                startActivity(intent);
-            }
-        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.grid_picker, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }
