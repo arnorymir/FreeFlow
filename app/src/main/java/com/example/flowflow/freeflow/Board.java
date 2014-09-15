@@ -11,12 +11,15 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by bjornorri on 12/09/14.
  */
 public class Board extends View {
+
+    private int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
 
     // Dimensions of the board
     private int mSize;
@@ -27,15 +30,18 @@ public class Board extends View {
 
     private Rect mRect = new Rect();
     private Paint mPaintGrid = new Paint();
+    private Paint mPaintDots = new Paint();
     private Paint mPaintPath = new Paint();
-    private Path mPath = new Path();
 
-    private CellPath mCellPath = new CellPath();
+    private Dot[] mDots;
+    private CellPath[] mCellPaths;
+    private CellPath mActiveCellPath = null;
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
         mPaintGrid.setStyle(Paint.Style.STROKE);
         mPaintGrid.setColor(Color.GRAY);
+        mPaintDots.setStyle(Paint.Style.FILL);
         mPaintPath.setStyle(Paint.Style.STROKE);
         mPaintPath.setColor(Color.GREEN);
         mPaintPath.setStrokeWidth(32);
@@ -44,8 +50,22 @@ public class Board extends View {
         mPaintPath.setAntiAlias(true);
     }
 
-    public void setSize(int size) {
-        mSize = size;
+    public void setPuzzle(Puzzle puzzle) {
+        mSize = puzzle.getSize();
+        mDots = puzzle.getDots();
+        mCellPaths = new CellPath[puzzle.getNumberOfColors()];
+        for(int i = 0; i < mCellPaths.length; i++) {
+            mCellPaths[i] = new CellPath(i);
+        }
+    }
+
+    // Returns the number of cells occupied by cell paths.
+    public int numberOfOccupiedCells() {
+        int count = 0;
+        for(CellPath cellPath : mCellPaths) {
+            count += cellPath.length();
+        }
+        return count;
     }
 
     // Methods to map screen coordinates to grid cells
@@ -94,19 +114,16 @@ public class Board extends View {
                 canvas.drawRect(mRect, mPaintGrid);
             }
         }
-        mPath.reset();
-        if (!mCellPath.isEmpty()) {
-            List<Coordinate> colist = mCellPath.getCoordinates();
-            Coordinate co = colist.get(0);
-            mPath.moveTo(colToX(co.getCol()) + mCellWidth / 2,
-                    rowToY(co.getRow()) + mCellHeight / 2);
-            for (int i = 1; i < colist.size(); i++) {
-                co = colist.get(i);
-                mPath.lineTo(colToX(co.getCol()) + mCellWidth / 2,
-                        rowToY(co.getRow()) + mCellHeight / 2 );
-            }
+
+        // Draw the dots.
+        for(Dot dot : mDots) {
+            drawDot(canvas, dot);
         }
-        canvas.drawPath(mPath, mPaintPath);
+
+        // Draw the cell paths.
+        for(CellPath cellPath : mCellPaths) {
+            drawCellPath(canvas, cellPath);
+        }
     }
 
     @Override
@@ -116,27 +133,138 @@ public class Board extends View {
         int c = xToCol(x);
         int r = yToRow(y);
 
-        if (c >= mSize || r >= mSize) {
+        if (c >= mSize || r >= mSize || c < 0 || r < 0) {
             return true;
         }
+        Coordinate coordinate = new Coordinate(c, r);
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mCellPath.reset();
-            mCellPath.append(new Coordinate(c, r));
-        }
-        else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (!mCellPath.isEmpty()) {
-                List<Coordinate> coordinateList = mCellPath.getCoordinates();
-                Coordinate last = coordinateList.get(coordinateList.size()-1);
-                if (areNeighbours(last.getCol(),last.getRow(), c, r)) {
-                    mCellPath.append(new Coordinate(c, r));
-                    invalidate();
+            CellPath cellPath = getCellPathAtCoordinate(coordinate);
+            if(cellPath != null) {
+                if(containsDot(coordinate)) {
+                    cellPath.reset();
                 }
+                else {
+                    cellPath.popPastCoordinate(coordinate);
+                }
+                cellPath.append(new Coordinate(c, r));
+                mActiveCellPath = cellPath;
             }
         }
+        else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (mActiveCellPath != null) {
+                if (!mActiveCellPath.isEmpty()) {
+                    if(moveIsAllowed(coordinate)) {
+                        CellPath cellPathAtCoordinate = getCellPathAtCoordinate(coordinate);
+                        if(cellPathAtCoordinate == null) {
+                            mActiveCellPath.append(coordinate);
+                        }
+                        else {
+                            // Check if the cell contains the end dot.
+                            mActiveCellPath.append(coordinate);
+                            Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
+                            if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
+                                mActiveCellPath = null;
+                            }
+                            else {
+                                cellPathAtCoordinate.popPastCoordinate(coordinate);
+                            }
+                        }
+                    }
+                }
+
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                mActiveCellPath = null;
+
+            }
+        }
+        invalidate();
+        ((PlayActivity)getContext()).update();
         return true;
     }
 
-    private boolean areNeighbours(int c1, int r1, int c2, int r2) {
-        return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
+    private void drawDot(Canvas canvas, Dot dot) {
+        mPaintDots.setColor(colors[dot.getColorID()]);
+        Coordinate c = dot.getCell();
+        canvas.drawCircle(colToX(c.getCol()) + mCellWidth / 2, rowToY(c.getRow()) + mCellHeight / 2,
+                mCellWidth / 3, mPaintDots);
+    }
+
+    private void drawCellPath(Canvas canvas, CellPath cellPath) {
+        if (!cellPath.isEmpty()) {
+            Path path = new Path();
+            List<Coordinate> colist = cellPath.getCoordinates();
+            Coordinate co = colist.get(0);
+            path.moveTo(colToX(co.getCol()) + mCellWidth / 2,
+                    rowToY(co.getRow()) + mCellHeight / 2);
+            for (int i = 1; i < colist.size(); i++) {
+                co = colist.get(i);
+                path.lineTo(colToX(co.getCol()) + mCellWidth / 2,
+                        rowToY(co.getRow()) + mCellHeight / 2 );
+            }
+            mPaintPath.setColor(colors[cellPath.getColorID()]);
+            canvas.drawPath(path, mPaintPath);
+        }
+    }
+
+    private boolean areNeighbours(Coordinate c1, Coordinate c2) {
+        return Math.abs(c1.getCol() - c2.getCol()) + Math.abs(c1.getRow() - c2.getRow()) == 1;
+    }
+
+    private Dot getDotAtCoordinate(Coordinate c) {
+        for(Dot dot : mDots) {
+            if(dot.getCell().equals(c)) {
+                return dot;
+            }
+        }
+        return null;
+    }
+
+    private CellPath getCellPathForColorID(int colorID) {
+        return mCellPaths[colorID];
+    }
+
+    private CellPath getCellPathAtCoordinate(Coordinate coordinate) {
+
+        // If the coordinate is in a cell path, return that cell path.
+        for(CellPath cellPath : mCellPaths) {
+            List<Coordinate> coordinates = cellPath.getCoordinates();
+            if(coordinates.contains(coordinate)) {
+                return cellPath;
+            }
+        }
+
+        // If the coordinate contains a dot, start a cell path for that color.
+        Dot dot = getDotAtCoordinate(coordinate);
+        if(dot != null) {
+            int colorID = dot.getColorID();
+            return getCellPathForColorID(colorID);
+        }
+        return null;
+    }
+
+    private boolean containsDot(Coordinate coordinate) {
+        for(Dot dot : mDots) {
+            if(dot.getCell().equals(coordinate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Determine if the coordinate may be appended to the cell path.
+    private boolean moveIsAllowed(Coordinate coordinate) {
+        // Only allow moves to adjacent cells
+        if(!areNeighbours(coordinate, mActiveCellPath.getLastCoordinate())) {
+            return false;
+        }
+
+        // Don't allow move if cell contains a dot in another color.
+        for(Dot dot : mDots) {
+            if(dot.getCell().equals(coordinate) && dot.getColorID() != mActiveCellPath.getColorID()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

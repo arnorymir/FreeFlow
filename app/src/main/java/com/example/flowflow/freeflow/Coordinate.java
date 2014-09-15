@@ -1,5 +1,7 @@
 package com.example.flowflow.freeflow;
 
+import android.util.Log;
+
 /**
  * Created by bjornorri on 12/09/14.
  */
@@ -30,6 +32,6 @@ public class Coordinate {
             return false;
         }
         Coordinate otherCoordinate = (Coordinate) other;
-        return otherCoordinate.getCol() == this.getCol()&& otherCoordinate.getRow() == this.getRow();
+        return otherCoordinate.getCol() == this.getCol() && otherCoordinate.getRow() == this.getRow();
     }
 }
