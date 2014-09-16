@@ -1,5 +1,6 @@
 package com.example.flowflow.freeflow;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class GridPickerActivity extends FragmentActivity {
     ViewPager Tab;
@@ -18,8 +20,6 @@ public class GridPickerActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // These buttons are here temporarily to allow us to get to the PlayActivity
-
         setContentView(R.layout.activity_grid_picker);
 
         TabAdapter = new TabPagerAdapter(getSupportFragmentManager());
@@ -32,7 +32,6 @@ public class GridPickerActivity extends FragmentActivity {
                         actionBar.setSelectedNavigationItem(position);
                     }
                 });
-
 
         Tab.setAdapter(TabAdapter);
         actionBar = getActionBar();
@@ -59,8 +58,9 @@ public class GridPickerActivity extends FragmentActivity {
         //Add New Tab
         actionBar.addTab(actionBar.newTab().setText("4x4").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("5x5").setTabListener(tabListener));
-
     }
+
+
 
 
 }
