@@ -17,10 +17,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         switch (i) {
             case 0:
                 //Fragement for Android Tab
-                return new Fragment4x4();
+                return new Fragment5x5();
             case 1:
                 //Fragment for Ios Tab
-                return new Fragment5x5();
+                return new Fragment7x7();
         }
         return null;
     }

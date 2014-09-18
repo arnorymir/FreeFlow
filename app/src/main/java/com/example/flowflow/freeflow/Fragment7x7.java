@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class Fragment5x5 extends Fragment {
+public class Fragment7x7 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -17,23 +17,18 @@ public class Fragment5x5 extends Fragment {
         View view = inflater.inflate(R.layout.activity_grid_picker_fragment, container, false);
 
         Button button = (Button) view.findViewById(R.id.gridPickerButton);
-        button.setText("5x5");
+        button.setText("7x7");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a = v.getId();
                 Intent intent = new Intent(getActivity(), PlayActivity.class);
-                intent.putExtra("BoardSize", 5);
+                intent.putExtra("BoardSize", 7);
                 startActivity(intent);
+
             }
         });
 
         return view;
     }
-
 }
-
-
-
-

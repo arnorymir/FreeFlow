@@ -56,8 +56,8 @@ public class GridPickerActivity extends FragmentActivity {
             }
         };
         //Add New Tab
-        actionBar.addTab(actionBar.newTab().setText("4x4").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("5x5").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("7x7").setTabListener(tabListener));
     }
 
 

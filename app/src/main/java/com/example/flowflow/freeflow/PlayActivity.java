@@ -12,6 +12,7 @@ public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
     private Game mGame;
+    private boolean hasWon = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class PlayActivity extends ActionBarActivity {
 
     public void update() {
         mGame.setOccupiedCells(mBoard.numberOfOccupiedCells());
-        if(mGame.isWon()) {
+        if(mGame.isWon() && this.hasWon == false) {
+            this.hasWon = true;
             Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
         }
     }

@@ -11,7 +11,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fourByFour"
+        android:id="@+id/gridPickerButton"
         android:layout_gravity="center_horizontal"
         android:background="@color/black"
         android:textColor="@color/white"
