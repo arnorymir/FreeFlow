@@ -37,12 +37,19 @@ public class CellPath {
         return mColorID;
     }
 
-    public void popPastCoordinate(Coordinate coordinate) {
+    public void popToCoordinate(Coordinate coordinate) {
         int index = mPath.indexOf(coordinate);
         if(index >= 0) {
-            for (int i=mPath.size()-1; i > index - 1; --i) {
+            for (int i = mPath.size()-1; i > index; --i) {
                 mPath.remove(i);
             }
+        }
+    }
+
+    public void popPastCoordinate(Coordinate coordinate) {
+        int index = mPath.indexOf(coordinate);
+        if(index > 0) {
+            popToCoordinate(mPath.get(index - 1));
         }
     }
 
@@ -59,5 +66,9 @@ public class CellPath {
 
     public int length() {
         return mPath.size();
+    }
+
+    public boolean contains(Coordinate coordinate) {
+        return getCoordinates().contains(coordinate);
     }
 }
