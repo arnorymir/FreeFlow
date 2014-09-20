@@ -12,7 +12,6 @@ public class CellPath {
 
     private ArrayList<Coordinate> mPath = new ArrayList<Coordinate>();
     private int mColorID;
-    private Coordinate mIntersection = null;
 
     public CellPath(int colorID) {
         mColorID = colorID;
@@ -60,13 +59,5 @@ public class CellPath {
 
     public int length() {
         return mPath.size();
-    }
-
-    public Coordinate getIntersection() {
-        return mIntersection;
-    }
-
-    public void setIntersection(Coordinate intersection) {
-        mIntersection = intersection;
     }
 }

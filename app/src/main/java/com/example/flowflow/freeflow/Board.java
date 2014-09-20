@@ -140,7 +140,7 @@ public class Board extends View {
         Coordinate coordinate = new Coordinate(c, r);
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            CellPath cellPath = getCellPathAtCoordinate(coordinate);
+            CellPath cellPath = getCellPathAtCoordinate(coordinate, false);
             if(cellPath != null) {
                 if(containsDot(coordinate)) {
                     cellPath.reset();
@@ -157,7 +157,7 @@ public class Board extends View {
             if (mActiveCellPath != null) {
                 if (!mActiveCellPath.isEmpty()) {
                     if(moveIsAllowed(coordinate)) {
-                        CellPath cellPathAtCoordinate = getCellPathAtCoordinate(coordinate);
+                        CellPath cellPathAtCoordinate = getCellPathAtCoordinate(coordinate, false);
                         if(cellPathAtCoordinate == null) {
                             mActiveCellPath.append(coordinate);
                         }
@@ -166,9 +166,10 @@ public class Board extends View {
                             mActiveCellPath.append(coordinate);
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
+                                commitActivePath();
                                 mActiveCellPath = null;
                             }
-                            else {
+                            else if(cellPathAtCoordinate == mActiveCellPath){
                                 cellPathAtCoordinate.popPastCoordinate(coordinate);
                                 cellPathAtCoordinate.append(coordinate);
                             }
@@ -179,6 +180,7 @@ public class Board extends View {
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_UP) {
+            commitActivePath();
             mActiveCellPath = null;
             invalidate();
         }
@@ -216,10 +218,16 @@ public class Board extends View {
                     rowToY(co.getRow()) + mCellHeight / 2);
             for (int i = 1; i < colist.size(); i++) {
                 co = colist.get(i);
+
                 path.lineTo(colToX(co.getCol()) + mCellWidth / 2,
                         rowToY(co.getRow()) + mCellHeight / 2);
-                if(co == cellPath.getIntersection()) {
-                    break;
+                if(mActiveCellPath != null) {
+                    if(i < colist.size() - 1) {
+                        Coordinate nextCo = colist.get(i + 1);
+                        if(cellPath != mActiveCellPath && mActiveCellPath.getCoordinates().contains(nextCo)) {
+                            break;
+                        }
+                    }
                 }
             }
             mPaintPath.setColor(colors[cellPath.getColorID()]);
@@ -244,13 +252,15 @@ public class Board extends View {
         return mCellPaths[colorID];
     }
 
-    private CellPath getCellPathAtCoordinate(Coordinate coordinate) {
+    private CellPath getCellPathAtCoordinate(Coordinate coordinate, boolean ignoreActive) {
 
         // If the coordinate is in a cell path, return that cell path.
         for(CellPath cellPath : mCellPaths) {
-            List<Coordinate> coordinates = cellPath.getCoordinates();
-            if(coordinates.contains(coordinate)) {
-                return cellPath;
+            if(!(ignoreActive && cellPath == mActiveCellPath)) {
+                List<Coordinate> coordinates = cellPath.getCoordinates();
+                if(coordinates.contains(coordinate)) {
+                    return cellPath;
+                }
             }
         }
 
@@ -258,7 +268,10 @@ public class Board extends View {
         Dot dot = getDotAtCoordinate(coordinate);
         if(dot != null) {
             int colorID = dot.getColorID();
-            return getCellPathForColorID(colorID);
+            CellPath cellPath = getCellPathForColorID(colorID);
+            if(!(ignoreActive && cellPath == mActiveCellPath)) {
+                return cellPath;
+            }
         }
         return null;
     }
@@ -286,5 +299,16 @@ public class Board extends View {
             }
         }
         return true;
+    }
+
+    private void commitActivePath() {
+        if(mActiveCellPath != null) {
+            for(Coordinate c : mActiveCellPath.getCoordinates()) {
+                CellPath intersectingPath = getCellPathAtCoordinate(c, true);
+                if(intersectingPath != null) {
+                    intersectingPath.popPastCoordinate(c);
+                }
+            }
+        }
     }
 }
