@@ -150,6 +150,7 @@ public class Board extends View {
                 }
                 cellPath.append(new Coordinate(c, r));
                 mActiveCellPath = cellPath;
+                invalidate();
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -169,17 +170,18 @@ public class Board extends View {
                             }
                             else {
                                 cellPathAtCoordinate.popPastCoordinate(coordinate);
+                                cellPathAtCoordinate.append(coordinate);
                             }
                         }
+                        invalidate();
                     }
                 }
-
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_UP) {
             mActiveCellPath = null;
+            invalidate();
         }
-        invalidate();
         ((PlayActivity)getContext()).update();
         return true;
     }
