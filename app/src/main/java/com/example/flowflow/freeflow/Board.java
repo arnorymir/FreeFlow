@@ -28,10 +28,10 @@ public class Board extends View {
     private int mCellWidth;
     private int mCellHeight;
 
-    private Rect mRect = new Rect();
     private Paint mPaintGrid = new Paint();
     private Paint mPaintDots = new Paint();
     private Paint mPaintPath = new Paint();
+    private Paint mPaintShade = new Paint();
 
     private Dot[] mDots;
     private CellPath[] mCellPaths;
@@ -43,11 +43,11 @@ public class Board extends View {
         mPaintGrid.setColor(Color.GRAY);
         mPaintDots.setStyle(Paint.Style.FILL);
         mPaintPath.setStyle(Paint.Style.STROKE);
-        mPaintPath.setColor(Color.GREEN);
         mPaintPath.setStrokeWidth(32);
         mPaintPath.setStrokeCap(Paint.Cap.ROUND);
         mPaintPath.setStrokeJoin(Paint.Join.ROUND);
         mPaintPath.setAntiAlias(true);
+        mPaintShade.setStyle(Paint.Style.FILL);
     }
 
     public void setPuzzle(Puzzle puzzle) {
@@ -106,12 +106,13 @@ public class Board extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Rect rect = new Rect();
         for (int r = 0; r < mSize; r++) {
             for (int c = 0; c < mSize; c++) {
                 int x = colToX(c);
                 int y = rowToY(r);
-                mRect.set(x, y, x + mCellWidth, y + mCellHeight);
-                canvas.drawRect(mRect, mPaintGrid);
+                rect.set(x, y, x + mCellWidth, y + mCellHeight);
+                canvas.drawRect(rect, mPaintGrid);
             }
         }
 
@@ -173,10 +174,10 @@ public class Board extends View {
                     }
                 }
 
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                mActiveCellPath = null;
-
             }
+        }
+        else if (event.getAction() == MotionEvent.ACTION_UP) {
+            mActiveCellPath = null;
         }
         invalidate();
         ((PlayActivity)getContext()).update();
@@ -192,6 +193,20 @@ public class Board extends View {
 
     private void drawCellPath(Canvas canvas, CellPath cellPath) {
         if (!cellPath.isEmpty()) {
+            // Draw color shade in all the cells
+            Rect rect = new Rect();
+            if(cellPath != mActiveCellPath) {
+                for(Coordinate c : cellPath.getCoordinates()) {
+                    int x = colToX(c.getCol());
+                    int y = rowToY(c.getRow());
+                    rect.set(x, y, x + mCellWidth, y + mCellHeight);
+                    mPaintShade.setColor(colors[cellPath.getColorID()]);
+                    mPaintShade.setAlpha(50);
+                    canvas.drawRect(rect, mPaintShade);
+                }
+            }
+
+            // Draw the path itself
             Path path = new Path();
             List<Coordinate> colist = cellPath.getCoordinates();
             Coordinate co = colist.get(0);
@@ -200,7 +215,10 @@ public class Board extends View {
             for (int i = 1; i < colist.size(); i++) {
                 co = colist.get(i);
                 path.lineTo(colToX(co.getCol()) + mCellWidth / 2,
-                        rowToY(co.getRow()) + mCellHeight / 2 );
+                        rowToY(co.getRow()) + mCellHeight / 2);
+                if(co == cellPath.getIntersection()) {
+                    break;
+                }
             }
             mPaintPath.setColor(colors[cellPath.getColorID()]);
             canvas.drawPath(path, mPaintPath);
