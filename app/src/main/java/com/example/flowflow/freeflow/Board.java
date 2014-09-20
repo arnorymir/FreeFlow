@@ -60,7 +60,11 @@ public class Board extends View {
     }
 
     // Returns the number of cells occupied by cell paths.
-    public int numberOfOccupiedCells() {
+    public Integer numberOfOccupiedCells() {
+        // Don't count the cells if a path is active, there might be intersections.
+        if(mActiveCellPath != null) {
+            return null;
+        }
         int count = 0;
         for(CellPath cellPath : mCellPaths) {
             count += cellPath.length();
@@ -106,6 +110,8 @@ public class Board extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        // Draw the grid
         Rect rect = new Rect();
         for (int r = 0; r < mSize; r++) {
             for (int c = 0; c < mSize; c++) {
@@ -121,10 +127,15 @@ public class Board extends View {
             drawDot(canvas, dot);
         }
 
-        // Draw the cell paths.
+        // Draw the inactive cell paths.
         for(CellPath cellPath : mCellPaths) {
-            drawCellPath(canvas, cellPath);
+            if(cellPath != mActiveCellPath) {
+                drawCellPath(canvas, cellPath);
+            }
         }
+
+        // Draw the active cell path last.
+        drawCellPath(canvas, mActiveCellPath);
     }
 
     @Override
@@ -134,44 +145,44 @@ public class Board extends View {
         int c = xToCol(x);
         int r = yToRow(y);
 
-        if (c >= mSize || r >= mSize || c < 0 || r < 0) {
+        // The user can avoid the ACTION_UP event, catch this here.
+        if(c >= mSize || r >= mSize || c < 0 || r < 0) {
+            if(mActiveCellPath != null) {
+                commitActiveCellPath();
+                invalidate();
+            }
             return true;
         }
         Coordinate coordinate = new Coordinate(c, r);
-
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            CellPath cellPath = getCellPathAtCoordinate(coordinate, false);
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            CellPath cellPath = getCellPathAtCoordinate(coordinate, true);
             if(cellPath != null) {
                 if(containsDot(coordinate)) {
                     cellPath.reset();
+                    cellPath.append(new Coordinate(c, r));
                 }
                 else {
-                    cellPath.popPastCoordinate(coordinate);
+                    cellPath.popToCoordinate(coordinate);
                 }
-                cellPath.append(new Coordinate(c, r));
                 mActiveCellPath = cellPath;
                 invalidate();
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (mActiveCellPath != null) {
-                if (!mActiveCellPath.isEmpty()) {
+            if(mActiveCellPath != null) {
+                if(!mActiveCellPath.isEmpty() && !coordinate.equals(mActiveCellPath.getLastCoordinate())) {
                     if(moveIsAllowed(coordinate)) {
-                        CellPath cellPathAtCoordinate = getCellPathAtCoordinate(coordinate, false);
-                        if(cellPathAtCoordinate == null) {
-                            mActiveCellPath.append(coordinate);
+                        // Pop the path if the cell is already in it.
+                        if(mActiveCellPath.contains(coordinate)) {
+                            mActiveCellPath.popToCoordinate(coordinate);
                         }
+                        // Otherwise append the cell.
                         else {
-                            // Check if the cell contains the end dot.
                             mActiveCellPath.append(coordinate);
+                            // If the cell contains the end dot, commit the path.
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
-                                commitActivePath();
-                                mActiveCellPath = null;
-                            }
-                            else if(cellPathAtCoordinate == mActiveCellPath){
-                                cellPathAtCoordinate.popPastCoordinate(coordinate);
-                                cellPathAtCoordinate.append(coordinate);
+                                commitActiveCellPath();
                             }
                         }
                         invalidate();
@@ -179,8 +190,8 @@ public class Board extends View {
                 }
             }
         }
-        else if (event.getAction() == MotionEvent.ACTION_UP) {
-            commitActivePath();
+        else if(event.getAction() == MotionEvent.ACTION_UP) {
+            commitActiveCellPath();
             mActiveCellPath = null;
             invalidate();
         }
@@ -196,42 +207,46 @@ public class Board extends View {
     }
 
     private void drawCellPath(Canvas canvas, CellPath cellPath) {
-        if (!cellPath.isEmpty()) {
-            // Draw color shade in all the cells
-            Rect rect = new Rect();
-            if(cellPath != mActiveCellPath) {
-                for(Coordinate c : cellPath.getCoordinates()) {
-                    int x = colToX(c.getCol());
-                    int y = rowToY(c.getRow());
-                    rect.set(x, y, x + mCellWidth, y + mCellHeight);
-                    mPaintShade.setColor(colors[cellPath.getColorID()]);
-                    mPaintShade.setAlpha(50);
-                    canvas.drawRect(rect, mPaintShade);
+        if(cellPath != null) {
+            if (!cellPath.isEmpty()) {
+                // Draw color shade in all the cells
+                Rect rect = new Rect();
+                if(cellPath != mActiveCellPath) {
+                    for(Coordinate c : cellPath.getCoordinates()) {
+                        int x = colToX(c.getCol());
+                        int y = rowToY(c.getRow());
+                        rect.set(x, y, x + mCellWidth, y + mCellHeight);
+                        mPaintShade.setColor(colors[cellPath.getColorID()]);
+                        mPaintShade.setAlpha(50);
+                        canvas.drawRect(rect, mPaintShade);
+                    }
                 }
-            }
 
-            // Draw the path itself
-            Path path = new Path();
-            List<Coordinate> colist = cellPath.getCoordinates();
-            Coordinate co = colist.get(0);
-            path.moveTo(colToX(co.getCol()) + mCellWidth / 2,
-                    rowToY(co.getRow()) + mCellHeight / 2);
-            for (int i = 1; i < colist.size(); i++) {
-                co = colist.get(i);
-
-                path.lineTo(colToX(co.getCol()) + mCellWidth / 2,
+                // Draw the path itself
+                Path path = new Path();
+                List<Coordinate> colist = cellPath.getCoordinates();
+                Coordinate co = colist.get(0);
+                path.moveTo(colToX(co.getCol()) + mCellWidth / 2,
                         rowToY(co.getRow()) + mCellHeight / 2);
-                if(mActiveCellPath != null) {
-                    if(i < colist.size() - 1) {
-                        Coordinate nextCo = colist.get(i + 1);
-                        if(cellPath != mActiveCellPath && mActiveCellPath.getCoordinates().contains(nextCo)) {
-                            break;
+
+                for(int i = 0; i < colist.size(); i++) {
+                    if(i > 0) {
+                        co = colist.get(i);
+                        path.lineTo(colToX(co.getCol()) + mCellWidth / 2,
+                                rowToY(co.getRow()) + mCellHeight / 2);
+                    }
+                    if(mActiveCellPath != null) {
+                        if(i < colist.size() - 1) {
+                            Coordinate nextCo = colist.get(i + 1);
+                            if(cellPath != mActiveCellPath && mActiveCellPath.contains(nextCo)) {
+                                break;
+                            }
                         }
                     }
                 }
+                mPaintPath.setColor(colors[cellPath.getColorID()]);
+                canvas.drawPath(path, mPaintPath);
             }
-            mPaintPath.setColor(colors[cellPath.getColorID()]);
-            canvas.drawPath(path, mPaintPath);
         }
     }
 
@@ -301,7 +316,7 @@ public class Board extends View {
         return true;
     }
 
-    private void commitActivePath() {
+    private void commitActiveCellPath() {
         if(mActiveCellPath != null) {
             for(Coordinate c : mActiveCellPath.getCoordinates()) {
                 CellPath intersectingPath = getCellPathAtCoordinate(c, true);
@@ -309,6 +324,7 @@ public class Board extends View {
                     intersectingPath.popPastCoordinate(c);
                 }
             }
+            mActiveCellPath = null;
         }
     }
 }

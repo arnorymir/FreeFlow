@@ -12,6 +12,7 @@ public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
     private Game mGame;
+    private boolean mGameWon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class PlayActivity extends ActionBarActivity {
         Puzzle puzzle = new Puzzle(size, dots);
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
+        mGameWon = false;
     }
 
 
@@ -48,9 +50,15 @@ public class PlayActivity extends ActionBarActivity {
     }
 
     public void update() {
-        mGame.setOccupiedCells(mBoard.numberOfOccupiedCells());
-        if(mGame.isWon()) {
-            Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+        if(!mGameWon) {
+            Integer numOccupiedCells = mBoard.numberOfOccupiedCells();
+            if(numOccupiedCells != null) {
+                mGame.setOccupiedCells(numOccupiedCells.intValue());
+            }
+            if(mGame.isWon()) {
+                Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+                mGameWon = true;
+            }
         }
     }
 }
