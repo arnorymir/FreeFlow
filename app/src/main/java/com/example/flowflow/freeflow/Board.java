@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,10 +31,12 @@ public class Board extends View {
     private Paint mPaintDots = new Paint();
     private Paint mPaintPath = new Paint();
     private Paint mPaintShade = new Paint();
+    private Paint mPaintCircle = new Paint();
 
     private Dot[] mDots;
     private CellPath[] mCellPaths;
     private CellPath mActiveCellPath = null;
+    private Coordinate mFingerCircle = null;
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +49,7 @@ public class Board extends View {
         mPaintPath.setStrokeJoin(Paint.Join.ROUND);
         mPaintPath.setAntiAlias(true);
         mPaintShade.setStyle(Paint.Style.FILL);
+        mPaintCircle.setStyle(Paint.Style.FILL);
     }
 
     public void setPuzzle(Puzzle puzzle) {
@@ -74,11 +76,11 @@ public class Board extends View {
 
     // Methods to map screen coordinates to grid cells
     private int xToCol(int x) {
-        return (x - getPaddingLeft()) / mCellWidth;
+        return (int)Math.floor((float)(x - getPaddingLeft()) / mCellWidth);
     }
 
     private int yToRow(int y) {
-        return (y - getPaddingTop()) / mCellHeight;
+        return (int)Math.floor((float)(y - getPaddingTop()) / mCellHeight);
     }
 
     // Methods to map grid cell coordinates to screen coordinates
@@ -134,69 +136,9 @@ public class Board extends View {
             }
         }
 
-        // Draw the active cell path last.
+        // Draw the active cell path.
         drawCellPath(canvas, mActiveCellPath);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        int c = xToCol(x);
-        int r = yToRow(y);
-
-        // The user can avoid the ACTION_UP event, catch this here.
-        if(c >= mSize || r >= mSize || c < 0 || r < 0) {
-            if(mActiveCellPath != null) {
-                commitActiveCellPath();
-                invalidate();
-            }
-            return true;
-        }
-        Coordinate coordinate = new Coordinate(c, r);
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            CellPath cellPath = getCellPathAtCoordinate(coordinate, true);
-            if(cellPath != null) {
-                if(containsDot(coordinate)) {
-                    cellPath.reset();
-                    cellPath.append(new Coordinate(c, r));
-                }
-                else {
-                    cellPath.popToCoordinate(coordinate);
-                }
-                mActiveCellPath = cellPath;
-                invalidate();
-            }
-        }
-        else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if(mActiveCellPath != null) {
-                if(!mActiveCellPath.isEmpty() && !coordinate.equals(mActiveCellPath.getLastCoordinate())) {
-                    if(moveIsAllowed(coordinate)) {
-                        // Pop the path if the cell is already in it.
-                        if(mActiveCellPath.contains(coordinate)) {
-                            mActiveCellPath.popToCoordinate(coordinate);
-                        }
-                        // Otherwise append the cell.
-                        else {
-                            mActiveCellPath.append(coordinate);
-                            // If the cell contains the end dot, commit the path.
-                            Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
-                            if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
-                                commitActiveCellPath();
-                            }
-                        }
-                        invalidate();
-                    }
-                }
-            }
-        }
-        else if(event.getAction() == MotionEvent.ACTION_UP) {
-            commitActiveCellPath();
-            mActiveCellPath = null;
-            invalidate();
-        }
-        ((PlayActivity)getContext()).update();
-        return true;
+        drawFingerCircle(canvas);
     }
 
     private void drawDot(Canvas canvas, Dot dot) {
@@ -248,6 +190,78 @@ public class Board extends View {
                 canvas.drawPath(path, mPaintPath);
             }
         }
+    }
+
+    private void drawFingerCircle(Canvas canvas) {
+        if(mFingerCircle != null && mActiveCellPath != null) {
+            mPaintCircle.setColor(colors[mActiveCellPath.getColorID()]);
+            mPaintCircle.setAlpha(50);
+            canvas.drawCircle(mFingerCircle.getCol(), mFingerCircle.getRow(), mCellWidth, mPaintCircle);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        int c = xToCol(x);
+        int r = yToRow(y);
+
+        // The user can avoid the ACTION_UP event, catch this here.
+        if(c >= mSize || r >= mSize || c < 0 || r < 0) {
+            if(mActiveCellPath != null) {
+                commitActiveCellPath();
+            }
+            mFingerCircle = null;
+            invalidate();
+            return true;
+        }
+        Coordinate coordinate = new Coordinate(c, r);
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            CellPath cellPath = getCellPathAtCoordinate(coordinate, true);
+            if(cellPath != null) {
+                if(containsDot(coordinate)) {
+                    cellPath.reset();
+                    cellPath.append(new Coordinate(c, r));
+                }
+                else {
+                    cellPath.popToCoordinate(coordinate);
+                }
+                mActiveCellPath = cellPath;
+                mFingerCircle = new Coordinate(x, y);
+            }
+        }
+        else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if(mActiveCellPath != null) {
+                mFingerCircle = new Coordinate(x, y);
+                if(!mActiveCellPath.isEmpty() && !coordinate.equals(mActiveCellPath.getLastCoordinate())) {
+                    if(moveIsAllowed(coordinate)) {
+                        // Pop the path if the cell is already in it.
+                        if(mActiveCellPath.contains(coordinate)) {
+                            mActiveCellPath.popToCoordinate(coordinate);
+                        }
+                        // Otherwise append the cell.
+                        else {
+                            mActiveCellPath.append(coordinate);
+                            // If the cell contains the end dot, commit the path.
+                            Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
+                            if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
+                                commitActiveCellPath();
+                                mFingerCircle = null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if(event.getAction() == MotionEvent.ACTION_UP) {
+            commitActiveCellPath();
+            mActiveCellPath = null;
+        }
+        // Must always invalidate to keep finger circle smooth.
+        invalidate();
+        ((PlayActivity)getContext()).update();
+        return true;
     }
 
     private boolean areNeighbours(Coordinate c1, Coordinate c2) {
