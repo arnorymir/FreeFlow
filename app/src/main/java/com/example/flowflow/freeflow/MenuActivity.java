@@ -38,7 +38,8 @@ public class MenuActivity extends ActionBarActivity {
 
         try {
             List<Puzzle> puzzles = new ArrayList<Puzzle>();
-            readRegular(getAssets().open("packs/regular.xml"), puzzles);
+            readPuzzle(getAssets().open("packs/regular.xml"), puzzles);
+            readPuzzle(getAssets().open("packs/mania.xml"), puzzles);
             mPuzzleRepo.mPuzzles = puzzles;
 
         }
@@ -107,7 +108,7 @@ public class MenuActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void readRegular(InputStream inputStream, List<Puzzle> puzzles) {
+    private void readPuzzle(InputStream inputStream, List<Puzzle> puzzles) {
         try {
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

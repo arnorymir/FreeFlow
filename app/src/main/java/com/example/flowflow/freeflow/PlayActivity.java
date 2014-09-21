@@ -12,8 +12,9 @@ public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
     private Game mGame;
-    private boolean hasWon = false;
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private boolean mGameWon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +26,17 @@ public class PlayActivity extends ActionBarActivity {
 
 
         // Create example puzzle instance
-        Dot[] dots1 =  puzzleRepo.mPuzzles.get(0).getDots();
-        int size1 = puzzleRepo.mPuzzles.get(0).getSize();
+        Dot[] dots1 =  puzzleRepo.mPuzzles.get(12).getDots();
+        int size1 = puzzleRepo.mPuzzles.get(12).getSize();
 
+       Log.i("","size: " + size1);
         Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(0, size - 1, 0), new Dot(1, 0, 1), new Dot(1, size - 1, 1), new Dot(2, 0, 2), new Dot(size-1, size - 1, 2)};
-       // Puzzle puzzle = new Puzzle(1,size, dots);
-        Puzzle puzzle = puzzleRepo.mPuzzles.get(3);
+        // Puzzle puzzle = new Puzzle(1,size, dots);
+        Puzzle puzzle = puzzleRepo.mPuzzles.get(11);
 
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
+        mGameWon = false;
     }
 
 
@@ -57,10 +60,15 @@ public class PlayActivity extends ActionBarActivity {
     }
 
     public void update() {
-        mGame.setOccupiedCells(mBoard.numberOfOccupiedCells());
-        if(mGame.isWon() && this.hasWon == false) {
-            this.hasWon = true;
-            Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+        if(!mGameWon) {
+            Integer numOccupiedCells = mBoard.numberOfOccupiedCells();
+            if(numOccupiedCells != null) {
+                mGame.setOccupiedCells(numOccupiedCells.intValue());
+            }
+            if(mGame.isWon()) {
+                Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+                mGameWon = true;
+            }
         }
     }
 }

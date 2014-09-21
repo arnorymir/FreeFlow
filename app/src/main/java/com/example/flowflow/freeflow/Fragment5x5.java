@@ -10,23 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Fragment5x5 extends Fragment {
 
- //   private PuzzleRepo test = PuzzleRepo.getInstance();
+    private PuzzleRepo test = PuzzleRepo.getInstance();
+
 
 
     @Override
@@ -35,6 +25,23 @@ public class Fragment5x5 extends Fragment {
 
         View view = inflater.inflate(R.layout.activity_grid_picker_fragment, container, false);
         Button button = (Button) view.findViewById(R.id.gridPickerButton);
+
+        //assuming you have a friendsView object that is some sort of Layout.
+        Button button1 = new Button(getActivity());
+        //do stuff like add text and listeners.
+
+
+        for (int i = 0; i < test.mPuzzles.size(); i++) {
+
+            /*
+            layout.setOrientation(LinearLayout.VERTICAL);
+            Button btn = new Button(this);
+            btn.setText("    ");
+            layout.addView(btn);*/
+        }
+
+
+
         button.setText("5x5");
 
         button.setOnClickListener(new View.OnClickListener() {
