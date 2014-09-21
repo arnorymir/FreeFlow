@@ -1,21 +1,28 @@
 package com.example.flowflow.freeflow;
 
-import android.app.Dialog;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import org.w3c.dom.Element;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class GridPickerActivity extends FragmentActivity {
     ViewPager Tab;
     TabPagerAdapter TabAdapter;
     ActionBar actionBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +66,5 @@ public class GridPickerActivity extends FragmentActivity {
         actionBar.addTab(actionBar.newTab().setText("5x5").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("7x7").setTabListener(tabListener));
     }
-
-
-
 
 }

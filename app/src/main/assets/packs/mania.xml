@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<pack>
+    <challenge id="1" name="7x7 (1-1)">
+        <puzzle id="1">
+            <size>7</size>
+            <flows>(0 6 6 2), (5 5 6 1), (0 1 1 2), (1 1 2 3), (0 2 3 5), (5 1 5 4)</flows>
+        </puzzle>
+    </challenge>
+</pack>

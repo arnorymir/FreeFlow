@@ -10,9 +10,12 @@ import android.widget.Button;
 
 public class Fragment7x7 extends Fragment {
 
+    private PuzzleRepo bla = PuzzleRepo.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.activity_grid_picker_fragment, container, false);
 

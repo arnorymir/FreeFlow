@@ -13,6 +13,7 @@ public class PlayActivity extends ActionBarActivity {
     private Board mBoard;
     private Game mGame;
     private boolean hasWon = false;
+    private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +22,16 @@ public class PlayActivity extends ActionBarActivity {
         mBoard = (Board) findViewById(R.id.playBoard);
         int size = getIntent().getExtras().getInt("BoardSize");
 
+
+
         // Create example puzzle instance
+        Dot[] dots1 =  puzzleRepo.mPuzzles.get(0).getDots();
+        int size1 = puzzleRepo.mPuzzles.get(0).getSize();
+
         Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(0, size - 1, 0), new Dot(1, 0, 1), new Dot(1, size - 1, 1), new Dot(2, 0, 2), new Dot(size-1, size - 1, 2)};
-        Puzzle puzzle = new Puzzle(size, dots);
+       // Puzzle puzzle = new Puzzle(1,size, dots);
+        Puzzle puzzle = puzzleRepo.mPuzzles.get(3);
+
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
     }
