@@ -23,7 +23,6 @@ public class GridPickerActivity extends FragmentActivity {
     TabPagerAdapter TabAdapter;
     ActionBar actionBar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,7 @@ public class GridPickerActivity extends FragmentActivity {
             @Override
             public void onTabReselected(android.app.ActionBar.Tab tab,
                                         FragmentTransaction ft) {
-                // TODO Auto-generated method stub
+
             }
 
             @Override
@@ -59,11 +58,13 @@ public class GridPickerActivity extends FragmentActivity {
             @Override
             public void onTabUnselected(android.app.ActionBar.Tab tab,
                                         FragmentTransaction ft) {
-                // TODO Auto-generated method stub
+
             }
         };
-        //Add New Tab
+
+        //Add New Tabs in actionbar
         actionBar.addTab(actionBar.newTab().setText("5x5").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("6x6").setTabListener(tabListener));
         actionBar.addTab(actionBar.newTab().setText("7x7").setTabListener(tabListener));
     }
 

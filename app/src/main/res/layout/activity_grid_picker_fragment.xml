@@ -5,15 +5,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="@color/black"
-    >
+    android:id="@+id/parent"
+    android:weightSum="1">
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gridPickerButton"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        />
 </LinearLayout>
