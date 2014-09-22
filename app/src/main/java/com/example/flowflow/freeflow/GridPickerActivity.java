@@ -6,22 +6,12 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import org.w3c.dom.Element;
-import android.util.Log;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class GridPickerActivity extends FragmentActivity {
     ViewPager Tab;
     TabPagerAdapter TabAdapter;
     ActionBar actionBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

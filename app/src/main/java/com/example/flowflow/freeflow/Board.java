@@ -171,7 +171,6 @@ public class Board extends View {
                         }
                     }
                 }
-
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 mActiveCellPath = null;
 

@@ -7,15 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment5x5 extends Fragment {
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
-
-
-    //LinearLayout parent = (LinearLayout)findViewById(R.id.parent);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,6 +27,9 @@ public class Fragment5x5 extends Fragment {
         Context context = getActivity();
 
         LinearLayout linearLayout = new LinearLayout(context);
+        List<Button> buttonList = new ArrayList<Button>();
+
+        GridView gridView = new GridView(context);
         ViewGroup viewGroup = (ViewGroup) view;
 
         // add new button and listener for every 5x5 puzzle
@@ -42,8 +47,17 @@ public class Fragment5x5 extends Fragment {
                     startActivity(intent);
                 }
             });
+         //   buttonList.add(button);
         }
+/*
+        gridView.setNumColumns(3);
 
+
+        ArrayAdapter<Button> adp = new ArrayAdapter<Button>(context, buttonList);
+
+        gridView.setAdapter(adp);
+        viewGroup.addView(gridView);
+*/
         return view;
     }
 
