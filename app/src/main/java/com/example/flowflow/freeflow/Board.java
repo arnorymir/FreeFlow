@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +33,10 @@ public class Board extends View {
     // Cell dimensions
     private int mCellWidth;
     private int mCellHeight;
+
+    // Sound effects
+    private SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+    private int soundIds[] = new int[10];
 
     private Paint mPaintGrid = new Paint();
     private Paint mPaintDots = new Paint();
@@ -56,6 +62,8 @@ public class Board extends View {
         mPaintPath.setAntiAlias(true);
         mPaintShade.setStyle(Paint.Style.FILL);
         mPaintCircle.setStyle(Paint.Style.FILL);
+
+        soundIds[0] = sp.load(mActivity, R.raw.connect, 1);
     }
 
     public void setPuzzle(Puzzle puzzle) {
@@ -277,6 +285,7 @@ public class Board extends View {
                             // If the cell contains the end dot, commit the path.
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
+                                sp.play(soundIds[0], 1, 1, 1, 0, 1);
                                 commitActiveCellPath();
                                 ((PlayActivity)mActivity).addMove();
                                 ((PlayActivity)mActivity).update();

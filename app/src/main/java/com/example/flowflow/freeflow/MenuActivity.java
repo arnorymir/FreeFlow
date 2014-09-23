@@ -2,6 +2,9 @@ package com.example.flowflow.freeflow;
 
 import android.content.Intent;
 import org.w3c.dom.Element;
+
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +35,11 @@ public class MenuActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+
+        final SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        final int soundIds[] = new int[1];
+        soundIds[0] = sp.load(this, R.raw.click, 1);
+
         try {
             List<Puzzle> puzzles = new ArrayList<Puzzle>();
             readPuzzle(getAssets().open("packs/regular.xml"), puzzles);
@@ -53,6 +61,7 @@ public class MenuActivity extends ActionBarActivity {
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.play(soundIds[0], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed Play button");
                 Intent intent = new Intent(getApplicationContext(), GridPickerActivity.class);
                 startActivity(intent);
@@ -61,6 +70,7 @@ public class MenuActivity extends ActionBarActivity {
         mTimeTrialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.play(soundIds[0], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed Time Trial button");
                 Intent intent = new Intent(getApplicationContext(), TimeTrialPickerActivity.class);
                 startActivity(intent);
@@ -69,6 +79,7 @@ public class MenuActivity extends ActionBarActivity {
         mHighScoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.play(soundIds[0], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed High Scores button");
                 Intent intent = new Intent(getApplicationContext(), HighScoresActivity.class);
                 startActivity(intent);
@@ -77,11 +88,14 @@ public class MenuActivity extends ActionBarActivity {
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.play(soundIds[0], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed Settings button");
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
             }
         });
+
+
     }
 
 
