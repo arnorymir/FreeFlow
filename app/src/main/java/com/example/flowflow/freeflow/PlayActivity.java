@@ -88,7 +88,6 @@ public class PlayActivity extends ActionBarActivity {
         int numOccupiedCells = mBoard.numberOfOccupiedCells();
         mGame.setOccupiedCells(numOccupiedCells);
         if(mGame.isWon()) {
-            mBoard.setAllowTouch(false);
             displayDialog();
         }
     }
