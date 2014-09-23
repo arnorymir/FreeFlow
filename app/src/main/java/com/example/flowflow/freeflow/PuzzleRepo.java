@@ -128,4 +128,8 @@ public class PuzzleRepo {
         }
         return puzzle.getID() == maxIndex;
     }
+
+    public int getPuzzleNumber(Puzzle puzzle) {
+        
+    }
 }

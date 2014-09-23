@@ -58,7 +58,6 @@ public class ButtonAdapter extends BaseAdapter {
                     Intent intent = new Intent(mContext, PlayActivity.class);
                     intent.putExtra("Id", v.getId());
                     mContext.startActivity(intent);
-                    //startActivity(intent);
                 }
             });
 

@@ -172,6 +172,7 @@ public class MenuActivity extends ActionBarActivity {
                             break;
                         case 7:
                             sizeOf7x7++;
+                            // This is a dirty workaround for an unexplainable bug.
                             c = 14;
                             break;
                     }
