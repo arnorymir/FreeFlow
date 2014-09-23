@@ -35,4 +35,7 @@ public class Puzzle {
         return mDots;
     }
 
+    public int getID() {
+        return mID;
+    }
 }

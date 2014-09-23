@@ -23,16 +23,17 @@ public class PlayActivity extends ActionBarActivity {
     private TextView mBestLabel;
     private TextView mPipeLabel;
     private Button mResetButton;
+    private Button mPrevButton;
+    private Button mNextButton;
     private Game mGame;
     private PuzzleRepo mPuzzleRepo = PuzzleRepo.getInstance();
-    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        id = getIntent().getExtras().getInt("Id");
+        int id = getIntent().getExtras().getInt("Id");
         Puzzle puzzle = mPuzzleRepo.getPuzzleByID(id);
 
         // Board
@@ -60,6 +61,31 @@ public class PlayActivity extends ActionBarActivity {
                 reset();
             }
         });
+
+        // Previous button
+        mPrevButton = (Button)findViewById(R.id.playPreviousButton);
+        mPrevButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Puzzle prevPuzzle = mPuzzleRepo.getPreviousPuzzle(mGame.getPuzzle());
+                mBoard.setPuzzle(prevPuzzle);
+                mGame = new Game(prevPuzzle);
+                reset();
+            }
+        });
+
+        // Next button
+        mNextButton = (Button)findViewById(R.id.playNextButton);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
+                mBoard.setPuzzle(nextPuzzle);
+                mGame = new Game(nextPuzzle);
+                reset();
+            }
+        });
+        toggleButtons();
     }
 
 
@@ -111,14 +137,15 @@ public class PlayActivity extends ActionBarActivity {
                 .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Set up the next puzzle.
-                        id++;
-                        Puzzle nextPuzzle = mPuzzleRepo.getPuzzleByID(id);
+                        Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
                         if(nextPuzzle != null) {
+                            Log.i("", "getNextPuzzle returned a puzzle with id: " + nextPuzzle.getID());
                             mBoard.setPuzzle(nextPuzzle);
+                            mGame = new Game(nextPuzzle);
                             reset();
                         }
                         else {
-                            Log.i("", "No more puzzles :(");
+
                         }
                     }
                 })
@@ -131,11 +158,28 @@ public class PlayActivity extends ActionBarActivity {
                 .show();
     }
 
+    // Toggle if buttons should be enabled or disabled
+    private void toggleButtons() {
+        if(mPuzzleRepo.isFirstOfItsSize(mGame.getPuzzle())) {
+            mPrevButton.setEnabled(false);
+        }
+        else {
+            mPrevButton.setEnabled(true);
+        }
+        if(mPuzzleRepo.isLastOfItsSize(mGame.getPuzzle())) {
+            mNextButton.setEnabled(false);
+        }
+        else {
+            mNextButton.setEnabled(true);
+        }
+    }
+
     private void reset() {
         mGame.reset();
         mBoard.reset();
         mBoard.invalidate();
         updateMoves();
         updatePipe();
+        toggleButtons();
     }
 }

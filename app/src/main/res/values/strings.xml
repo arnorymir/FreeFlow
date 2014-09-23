@@ -16,5 +16,6 @@
     <string name="nextPuzzle">Next puzzle</string>
     <string name="quit">Quit</string>
     <string name="solveAgain">Solve again</string>
-
+    <string name="next">>></string>
+    <string name="previous">&#60;&#60;</string>
 </resources>

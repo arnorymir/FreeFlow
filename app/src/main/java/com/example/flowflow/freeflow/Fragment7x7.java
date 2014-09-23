@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 public class Fragment7x7 extends Fragment {
+
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
 
@@ -21,25 +23,10 @@ public class Fragment7x7 extends Fragment {
         View view = inflater.inflate(R.layout.activity_grid_picker_fragment, container, false);
         Context context = getActivity();
 
-        LinearLayout linearLayout = new LinearLayout(context);
-        ViewGroup viewGroup = (ViewGroup) view;
+        GridView gridview = (GridView) view.findViewById(R.id.gridview);
+        // the parameter are context, number of puzzles and size of the board.
+        gridview.setAdapter(new ButtonAdapter(context,puzzleRepo.sizeOf7x7,7));
 
-        // add new button and listener for every 7x7 puzzle
-        for(int i = 0; i < puzzleRepo.sizeOf7x7  ; i++) {
-            Button button = new Button(context);
-            button.setText(Integer.toString(i+1));
-            button.setId(i + puzzleRepo.sizeOf5x5 + puzzleRepo.sizeOf6x6);
-            viewGroup.addView(button);
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    intent.putExtra("Id", v.getId());
-                    startActivity(intent);
-                }
-            });
-        }
         return view;
     }
 }
