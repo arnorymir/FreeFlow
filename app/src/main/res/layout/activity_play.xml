@@ -9,6 +9,14 @@
     android:id="@+id/playLayout"
     tools:context="com.example.flowflow.freeflow.PlayActivity">
 
+    <TextView
+        android:id="@+id/playTitleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"/>
+
     <com.example.flowflow.freeflow.Board
         android:id="@+id/playBoard"
         android:layout_width="fill_parent"

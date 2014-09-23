@@ -51,7 +51,6 @@ public class PuzzleRepo {
     }
 
     public Puzzle getNextPuzzle(Puzzle puzzle) {
-        Log.i("", "getNextPuzzle received a puzzle with id: " + puzzle.getID());
         int size = puzzle.getSize();
         int maxIndex;
         int minIndex;
