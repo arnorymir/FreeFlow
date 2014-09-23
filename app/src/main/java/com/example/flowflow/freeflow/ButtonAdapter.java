@@ -49,7 +49,7 @@ public class ButtonAdapter extends BaseAdapter {
                     button.setId(position + puzzleRepo.sizeOf5x5);
                     break;
                 case 7:
-                    button.setId(position + puzzleRepo.sizeOf5x5 + puzzleRepo.sizeOf7x7);
+                    button.setId(position + puzzleRepo.sizeOf5x5 + puzzleRepo.sizeOf6x6);
                     break;
             }
             button.setOnClickListener(new View.OnClickListener() {
