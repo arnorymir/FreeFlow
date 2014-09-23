@@ -35,4 +35,9 @@ public class Game {
     public void addMove() {
         numMoves++;
     }
+
+    public void reset() {
+        numOccupiedCells = 0;
+        numMoves = 0;
+    }
 }

@@ -12,5 +12,6 @@
     <string name="title_activity_time_trial_picker">TimeTrialPickerActivity</string>
     <string name="title_activity_high_scores">HighScoresActivity</string>
     <string name="title_activity_play">PlayActivity</string>
+    <string name="reset">Reset</string>
 
 </resources>

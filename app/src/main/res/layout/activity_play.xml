@@ -13,6 +13,7 @@
         android:id="@+id/playBoard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8px"
         android:layout_centerInParent="true"/>
 
     <TextView
@@ -33,5 +34,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/playBoard"
         android:layout_alignRight="@id/playBoard"/>
+
+    <Button
+        android:id="@+id/playResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playBoard"
+        android:layout_centerHorizontal="true"
+        android:text="@string/reset"/>
 
 </RelativeLayout>

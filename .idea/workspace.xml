@@ -48,8 +48,8 @@
       <file leaf-file-name="Game.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5384617" vertical-offset="85" max-vertical-offset="600">
-              <caret line="17" column="5" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="5" />
+            <state vertical-scroll-proportion="-20.76923" vertical-offset="0" max-vertical-offset="675">
+              <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
               <folding>
                 <element signature="e#607#608#0" expanded="true" />
                 <element signature="e#638#639#0" expanded="true" />
@@ -63,13 +63,15 @@
       <file leaf-file-name="PlayActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/PlayActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5862069" vertical-offset="795" max-vertical-offset="1395">
-              <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.9310345" vertical-offset="360" max-vertical-offset="1620">
+              <caret line="62" column="30" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
               <folding>
-                <element signature="e#2530#2531#0" expanded="true" />
-                <element signature="e#2594#2595#0" expanded="true" />
-                <element signature="e#2800#2801#0" expanded="true" />
-                <element signature="e#2831#2832#0" expanded="true" />
+                <element signature="e#1666#1943#0" expanded="true" />
+                <element signature="e#1932#1933#0" expanded="true" />
+                <element signature="e#3051#3052#0" expanded="true" />
+                <element signature="e#3115#3116#0" expanded="true" />
+                <element signature="e#3321#3322#0" expanded="true" />
+                <element signature="e#3352#3353#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,13 +83,14 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.0" vertical-offset="132" max-vertical-offset="645">
-              <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+            <state vertical-scroll-proportion="4.4444447" vertical-offset="345" max-vertical-offset="780">
+              <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
               <folding>
                 <element signature="e#231#266#0" expanded="true" />
                 <element signature="e#292#327#0" expanded="true" />
                 <element signature="e#351#384#0" expanded="true" />
                 <element signature="e#411#444#0" expanded="true" />
+                <element signature="e#1772#1787#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,10 +99,12 @@
       <file leaf-file-name="Board.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.730769" vertical-offset="5248" max-vertical-offset="5685">
-              <caret line="371" column="59" selection-start-line="371" selection-start-column="59" selection-end-line="371" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5522" max-vertical-offset="5985">
+              <caret line="395" column="29" selection-start-line="395" selection-start-column="29" selection-end-line="395" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#14297#14298#0" expanded="true" />
+                <element signature="e#14333#14334#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1195,8 +1200,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Coordinate.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Puzzle.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/CellPath.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Game.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Game.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Board.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/PlayActivity.java" />
       </list>
@@ -1330,6 +1336,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FreeFlow" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FreeFlow" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1649,19 +1685,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/PlayActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="705">
-          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
-          <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/GridPickerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1005">
@@ -1681,6 +1704,7 @@
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1691,6 +1715,8 @@
           <caret line="116" column="26" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1711,10 +1737,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="705">
           <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
           <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
+            <element signature="e#1666#1943#0" expanded="true" />
+            <element signature="e#1932#1933#0" expanded="true" />
+            <element signature="e#3051#3052#0" expanded="true" />
+            <element signature="e#3115#3116#0" expanded="true" />
+            <element signature="e#3321#3322#0" expanded="true" />
+            <element signature="e#3352#3353#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1738,6 +1766,7 @@
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1748,6 +1777,8 @@
           <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1787,10 +1818,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="705">
           <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
           <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
+            <element signature="e#1666#1943#0" expanded="true" />
+            <element signature="e#1932#1933#0" expanded="true" />
+            <element signature="e#3051#3052#0" expanded="true" />
+            <element signature="e#3115#3116#0" expanded="true" />
+            <element signature="e#3321#3322#0" expanded="true" />
+            <element signature="e#3352#3353#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1814,6 +1847,7 @@
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1824,6 +1858,8 @@
           <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1863,10 +1899,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="705">
           <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
           <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
+            <element signature="e#1666#1943#0" expanded="true" />
+            <element signature="e#1932#1933#0" expanded="true" />
+            <element signature="e#3051#3052#0" expanded="true" />
+            <element signature="e#3115#3116#0" expanded="true" />
+            <element signature="e#3321#3322#0" expanded="true" />
+            <element signature="e#3352#3353#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1890,6 +1928,7 @@
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1900,6 +1939,8 @@
           <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1928,10 +1969,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="705">
           <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
           <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
+            <element signature="e#1666#1943#0" expanded="true" />
+            <element signature="e#1932#1933#0" expanded="true" />
+            <element signature="e#3051#3052#0" expanded="true" />
+            <element signature="e#3115#3116#0" expanded="true" />
+            <element signature="e#3321#3322#0" expanded="true" />
+            <element signature="e#3352#3353#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1955,6 +1998,7 @@
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1965,6 +2009,8 @@
           <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1993,10 +2039,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="675">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
           <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
+            <element signature="e#1666#1943#0" expanded="true" />
+            <element signature="e#1932#1933#0" expanded="true" />
+            <element signature="e#3051#3052#0" expanded="true" />
+            <element signature="e#3115#3116#0" expanded="true" />
+            <element signature="e#3321#3322#0" expanded="true" />
+            <element signature="e#3352#3353#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2013,6 +2061,7 @@
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2023,6 +2072,8 @@
           <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2129,26 +2180,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.0" vertical-offset="132" max-vertical-offset="645">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+        <state vertical-scroll-proportion="4.4444447" vertical-offset="345" max-vertical-offset="780">
+          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
           <folding>
             <element signature="e#231#266#0" expanded="true" />
             <element signature="e#292#327#0" expanded="true" />
             <element signature="e#351#384#0" expanded="true" />
             <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1772#1787#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617" vertical-offset="85" max-vertical-offset="600">
-          <caret line="17" column="5" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="5" />
+        <state vertical-scroll-proportion="-20.76923" vertical-offset="0" max-vertical-offset="675">
+          <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
           <folding>
             <element signature="e#607#608#0" expanded="true" />
             <element signature="e#638#639#0" expanded="true" />
@@ -2160,23 +2220,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.730769" vertical-offset="5248" max-vertical-offset="5685">
-          <caret line="371" column="59" selection-start-line="371" selection-start-column="59" selection-end-line="371" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="5522" max-vertical-offset="5985">
+          <caret line="395" column="29" selection-start-line="395" selection-start-column="29" selection-end-line="395" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#14297#14298#0" expanded="true" />
+            <element signature="e#14333#14334#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/flowflow/freeflow/PlayActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5862069" vertical-offset="795" max-vertical-offset="1395">
-          <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.9310345" vertical-offset="360" max-vertical-offset="1620">
+          <caret line="62" column="30" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
           <folding>
-            <element signature="e#2530#2531#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-            <element signature="e#2800#2801#0" expanded="true" />
-            <element signature="e#2831#2832#0" expanded="true" />
+            <element signature="e#1666#1943#0" expanded="true" />
+            <element signature="e#1932#1933#0" expanded="true" />
+            <element signature="e#3051#3052#0" expanded="true" />
+            <element signature="e#3115#3116#0" expanded="true" />
+            <element signature="e#3321#3322#0" expanded="true" />
+            <element signature="e#3352#3353#0" expanded="true" />
           </folding>
         </state>
       </provider>

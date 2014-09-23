@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class PlayActivity extends ActionBarActivity {
     private TextView mMoveLabel;
     private TextView mBestLabel;
     private TextView mPipeLabel;
+    private Button mResetButton;
     private Game mGame;
     private boolean mGameWon;
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
@@ -48,6 +50,19 @@ public class PlayActivity extends ActionBarActivity {
         // Pipe label
         mPipeLabel = (TextView) findViewById(R.id.playPipeLabel);
         updatePipe();
+
+        // Reset button
+        mResetButton = (Button) findViewById(R.id.playResetButton);
+        mResetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGame.reset();
+                mBoard.reset();
+                mBoard.invalidate();
+                updatePipe();
+                updateMoves();
+            }
+        });
     }
 
 
@@ -79,6 +94,7 @@ public class PlayActivity extends ActionBarActivity {
             if(mGame.isWon()) {
                 mGameWon = true;
                 Log.i("", "Won");
+                mBoard.setAllowTouch(false);
             }
         }
     }
