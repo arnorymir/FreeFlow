@@ -28,8 +28,6 @@ public class Board extends View {
     // Get the activity
     private Activity mActivity;
 
-    private boolean allowTouch = true;
-
     // Cell dimensions
     private int mCellWidth;
     private int mCellHeight;
@@ -228,10 +226,6 @@ public class Board extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(!allowTouch) {
-            return true;
-        }
-
         int x = (int) event.getX();
         int y = (int) event.getY();
         int c = xToCol(x);
@@ -385,16 +379,11 @@ public class Board extends View {
         }
     }
 
-    public void setAllowTouch(boolean allowed) {
-        allowTouch = allowed;
-    }
-
     public void reset() {
         for(CellPath cellPath : mCellPaths) {
             cellPath.reset();
         }
         mActiveCellPath = null;
         mFingerCircle = null;
-        allowTouch = true;
     }
 }
