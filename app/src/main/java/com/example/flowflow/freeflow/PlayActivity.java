@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easyandroidanimations.library.ExplodeAnimation;
@@ -13,6 +16,7 @@ import com.easyandroidanimations.library.ExplodeAnimation;
 public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
+    private TextView mMoveLabel;
     private Game mGame;
     private boolean mGameWon;
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
@@ -22,18 +26,16 @@ public class PlayActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         mBoard = (Board) findViewById(R.id.playBoard);
+
         int id = getIntent().getExtras().getInt("Id");
-
-
-
-        // Create example puzzle instance
-
-        // Puzzle puzzle = new Puzzle(1,size, dots);
         Puzzle puzzle = puzzleRepo.mPuzzles.get(id);
 
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
         mGameWon = false;
+
+        mMoveLabel = (TextView) findViewById(R.id.playMoveLabel);
+        mMoveLabel.setText("Moves: " + mGame.getMoves());
     }
 
 
@@ -57,8 +59,7 @@ public class PlayActivity extends ActionBarActivity {
     }
 
     public void update() {
-        // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
-        getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+        mMoveLabel.setText("Moves: " + mGame.getMoves());
         if(!mGameWon) {
             Integer numOccupiedCells = mBoard.numberOfOccupiedCells();
             if(numOccupiedCells != null) {
@@ -67,9 +68,11 @@ public class PlayActivity extends ActionBarActivity {
             if(mGame.isWon()) {
                 mGameWon = true;
                 new ExplodeAnimation(mBoard).animate();
-                //Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
-
             }
         }
+    }
+
+    public void addMove() {
+        mGame.addMove();
     }
 }

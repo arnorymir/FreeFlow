@@ -217,7 +217,8 @@ public class Board extends View {
             }
             mFingerCircle = null;
             invalidate();
-            ((PlayActivity)getContext()).update();
+            // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
+            ((PlayActivity)getContext()).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
             return true;
         }
         Coordinate coordinate = new Coordinate(c, r);
@@ -251,6 +252,7 @@ public class Board extends View {
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
                                 commitActiveCellPath();
+                                ((PlayActivity)getContext()).update();
                                 mFingerCircle = null;
                             }
                         }
@@ -259,12 +261,15 @@ public class Board extends View {
             }
         }
         else if(event.getAction() == MotionEvent.ACTION_UP) {
-            commitActiveCellPath();
-            mActiveCellPath = null;
+            if(mActiveCellPath != null) {
+                commitActiveCellPath();
+                ((PlayActivity)getContext()).update();
+            }
         }
         // Must always invalidate to keep finger circle smooth.
         invalidate();
-        ((PlayActivity)getContext()).update();
+        // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
+        ((PlayActivity)getContext()).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
         return true;
     }
 
@@ -343,6 +348,7 @@ public class Board extends View {
                 }
             }
             mActiveCellPath = null;
+            ((PlayActivity)getContext()).addMove();
         }
     }
 }
