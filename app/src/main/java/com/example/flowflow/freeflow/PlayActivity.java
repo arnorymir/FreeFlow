@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.easyandroidanimations.library.Animation;
+import com.easyandroidanimations.library.AnimationListener;
 import com.easyandroidanimations.library.ExplodeAnimation;
 
 
@@ -16,13 +20,14 @@ public class PlayActivity extends ActionBarActivity {
     private Game mGame;
     private boolean mGameWon;
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         mBoard = (Board) findViewById(R.id.playBoard);
-        int id = getIntent().getExtras().getInt("Id");
+        id = getIntent().getExtras().getInt("Id");
 
 
 
@@ -66,9 +71,18 @@ public class PlayActivity extends ActionBarActivity {
             }
             if(mGame.isWon()) {
                 mGameWon = true;
-                new ExplodeAnimation(mBoard).animate();
-                //Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
-
+                new ExplodeAnimation(mBoard)
+                        .setExplodeMatrix(ExplodeAnimation.MATRIX_2X2)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setDuration(500)
+                        .setListener(new AnimationListener() {
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                //RelativeLayout mLayout =
+                                //mLayout. mBoard.findViewById(id + 1);
+                            }
+                        })
+                        .animate();
             }
         }
     }

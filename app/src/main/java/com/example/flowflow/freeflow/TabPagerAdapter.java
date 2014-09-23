@@ -17,9 +17,9 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new Fragment5x5();
             case 1:
-                return new Fragment6x6();
+                return new Fragment5x5();
             case 2:
-                return new Fragment7x7();
+                return new Fragment5x5();
         }
         return null;
     }
