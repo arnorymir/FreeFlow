@@ -21,4 +21,10 @@ public class PuzzleRepo {
 
     private PuzzleRepo(){}
 
+    public Puzzle getPuzzleByID(int id) {
+        if(id < 0 || id >= mPuzzles.size()) {
+            return null;
+        }
+        return mPuzzles.get(id);
+    }
 }

@@ -24,15 +24,16 @@ public class PlayActivity extends ActionBarActivity {
     private TextView mPipeLabel;
     private Button mResetButton;
     private Game mGame;
-    private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private PuzzleRepo mPuzzleRepo = PuzzleRepo.getInstance();
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        int id = getIntent().getExtras().getInt("Id");
-        Puzzle puzzle = puzzleRepo.mPuzzles.get(id);
+        id = getIntent().getExtras().getInt("Id");
+        Puzzle puzzle = mPuzzleRepo.getPuzzleByID(id);
 
         // Board
         mBoard = (Board) findViewById(R.id.playBoard);
@@ -110,11 +111,21 @@ public class PlayActivity extends ActionBarActivity {
                 .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!")
                 .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
+                        // Set up the next puzzle.
+                        id++;
+                        Puzzle nextPuzzle = mPuzzleRepo.getPuzzleByID(id);
+                        if(nextPuzzle != null) {
+                            mBoard.setPuzzle(nextPuzzle);
+                            reset();
+                        }
+                        else {
+                            Log.i("", "No more puzzles :(");
+                        }
                     }
                 })
                 .setNegativeButton(R.string.solveAgain, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        // Set this puzzle up again.
                         reset();
                     }
                 })
