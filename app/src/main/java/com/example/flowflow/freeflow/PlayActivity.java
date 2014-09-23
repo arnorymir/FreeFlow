@@ -19,6 +19,7 @@ import com.easyandroidanimations.library.ExplodeAnimation;
 public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
+    private TextView mTitleLabel;
     private TextView mMoveLabel;
     private TextView mBestLabel;
     private TextView mPipeLabel;
@@ -53,6 +54,10 @@ public class PlayActivity extends ActionBarActivity {
         mPipeLabel = (TextView) findViewById(R.id.playPipeLabel);
         updatePipe();
 
+        // Title label
+        mTitleLabel = (TextView)findViewById(R.id.playTitleLabel);
+        mTitleLabel.setText("Puzzle " + (mGame.getPuzzle().getID() + 1));
+
         // Reset button
         mResetButton = (Button) findViewById(R.id.playResetButton);
         mResetButton.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +72,7 @@ public class PlayActivity extends ActionBarActivity {
         mPrevButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Puzzle prevPuzzle = mPuzzleRepo.getPreviousPuzzle(mGame.getPuzzle());
-                mBoard.setPuzzle(prevPuzzle);
-                mGame = new Game(prevPuzzle);
-                reset();
+                goToPreviousPuzzle();
             }
         });
 
@@ -79,10 +81,7 @@ public class PlayActivity extends ActionBarActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
-                mBoard.setPuzzle(nextPuzzle);
-                mGame = new Game(nextPuzzle);
-                reset();
+                goToNextPuzzle();
             }
         });
         toggleButtons();
@@ -131,30 +130,37 @@ public class PlayActivity extends ActionBarActivity {
     }
 
     private void displayDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Nice!")
-                .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!")
-                .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Set up the next puzzle.
-                        Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
-                        if(nextPuzzle != null) {
-                            mBoard.setPuzzle(nextPuzzle);
-                            mGame = new Game(nextPuzzle);
-                            reset();
-                        }
-                        else {
 
-                        }
-                    }
-                })
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                .setTitle("Nice!")
                 .setNegativeButton(R.string.solveAgain, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Set this puzzle up again.
                         reset();
                     }
-                })
-                .show();
+                });
+
+        final Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
+        if(nextPuzzle != null) {
+            dialog
+                .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!")
+                .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    goToNextPuzzle();
+                }
+            });
+        }
+        else {
+            dialog
+                .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!\nThis was the last puzzle.")
+                .setPositiveButton(R.string.quit, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        }
+        dialog.show();
     }
 
     // Toggle if buttons should be enabled or disabled
@@ -180,5 +186,24 @@ public class PlayActivity extends ActionBarActivity {
         updateMoves();
         updatePipe();
         toggleButtons();
+        mTitleLabel.setText("Puzzle " + (mGame.getPuzzle().getID() + 1));
+    }
+
+    private void goToPreviousPuzzle() {
+        Puzzle prevPuzzle = mPuzzleRepo.getPreviousPuzzle(mGame.getPuzzle());
+        if(prevPuzzle != null) {
+            mGame = new Game(prevPuzzle);
+            mBoard.setPuzzle(prevPuzzle);
+            reset();
+        }
+    }
+
+    private void goToNextPuzzle() {
+        Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
+        if(nextPuzzle != null) {
+            mGame = new Game(nextPuzzle);
+            mBoard.setPuzzle(nextPuzzle);
+            reset();
+        }
     }
 }
