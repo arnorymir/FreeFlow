@@ -26,39 +26,12 @@ public class Fragment5x5 extends Fragment {
         View view = inflater.inflate(R.layout.activity_grid_picker_fragment, container, false);
         Context context = getActivity();
 
-        LinearLayout linearLayout = new LinearLayout(context);
-        List<Button> buttonList = new ArrayList<Button>();
+        GridView gridview = (GridView) view.findViewById(R.id.gridview);
+        // the parameter are context, number of puzzles and size of the board.
+        gridview.setAdapter(new buttonAdapter(context,puzzleRepo.sizeOf5x5,5));
 
-        GridView gridView = new GridView(context);
-        ViewGroup viewGroup = (ViewGroup) view;
-
-        // add new button and listener for every 5x5 puzzle
-        for(int i = 0; i < puzzleRepo.sizeOf5x5  ; i++) {
-            Button button = new Button(context);
-            button.setText(Integer.toString(i+1));
-            button.setId(i);
-            viewGroup.addView(button);
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    intent.putExtra("Id", v.getId());
-                    startActivity(intent);
-                }
-            });
-         //   buttonList.add(button);
-        }
-/*
-        gridView.setNumColumns(3);
-
-
-        ArrayAdapter<Button> adp = new ArrayAdapter<Button>(context, buttonList);
-
-        gridView.setAdapter(adp);
-        viewGroup.addView(gridView);
-*/
         return view;
     }
+
 
 }
