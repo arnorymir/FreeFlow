@@ -218,6 +218,7 @@ public class Board extends View {
             }
             mFingerCircle = null;
             invalidate();
+            ((PlayActivity)getContext()).update();
             return true;
         }
         Coordinate coordinate = new Coordinate(c, r);

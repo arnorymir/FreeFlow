@@ -52,6 +52,8 @@ public class PlayActivity extends ActionBarActivity {
     }
 
     public void update() {
+        // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
+        getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
         if(!mGameWon) {
             Integer numOccupiedCells = mBoard.numberOfOccupiedCells();
             if(numOccupiedCells != null) {
