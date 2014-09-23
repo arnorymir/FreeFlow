@@ -158,13 +158,15 @@ public class MenuActivity extends ActionBarActivity {
                             break;
                         case 7:
                             sizeOf7x7++;
+                            c = 14;
                             break;
                     }
-
+              
                     //adding new puzzle. c is the id of the puzzle.
                     puzzles.add(new Puzzle(c, Integer.parseInt(size), returnDot));
                 }
             }
+
             mPuzzleRepo.sizeOf5x5 = sizeOf5x5;
             mPuzzleRepo.sizeOf6x6 = sizeOf6x6;
             mPuzzleRepo.sizeOf7x7 = sizeOf7x7;
