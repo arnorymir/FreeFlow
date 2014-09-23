@@ -2,6 +2,7 @@ package com.example.flowflow.freeflow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -65,8 +66,6 @@ public class ButtonAdapter extends BaseAdapter {
             button = (Button) convertView;
         }
         button.setText(Integer.toString(position + 1));
-
-
         return button;
     }
 

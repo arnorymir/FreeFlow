@@ -129,8 +129,7 @@ public class MenuActivity extends ActionBarActivity {
             int sizeOf7x7 = mPuzzleRepo.sizeOf7x7;
 
             NodeList nList = doc.getElementsByTagName( "puzzle" );
-            for ( int c=0; c < nList.getLength(); c++ ) {
-
+            for (int c = 0; c < nList.getLength(); c++) {
                 Node nNode = nList.item(c);
                 if ( nNode.getNodeType() == Node.ELEMENT_NODE ) {
                     Element eNode = (Element) nNode;

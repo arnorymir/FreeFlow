@@ -56,7 +56,7 @@ public class PlayActivity extends ActionBarActivity {
 
         // Title label
         mTitleLabel = (TextView)findViewById(R.id.playTitleLabel);
-        mTitleLabel.setText("Puzzle " + (mGame.getPuzzle().getID() + 1));
+        mTitleLabel.setText("Puzzle " + mPuzzleRepo.getPuzzleNumber(mGame.getPuzzle()));
 
         // Reset button
         mResetButton = (Button) findViewById(R.id.playResetButton);
@@ -186,7 +186,7 @@ public class PlayActivity extends ActionBarActivity {
         updateMoves();
         updatePipe();
         toggleButtons();
-        mTitleLabel.setText("Puzzle " + (mGame.getPuzzle().getID() + 1));
+        mTitleLabel.setText("Puzzle " + mPuzzleRepo.getPuzzleNumber(mGame.getPuzzle()));
     }
 
     private void goToPreviousPuzzle() {

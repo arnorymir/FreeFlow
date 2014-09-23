@@ -130,6 +130,19 @@ public class PuzzleRepo {
     }
 
     public int getPuzzleNumber(Puzzle puzzle) {
-        
+        Log.i("", "Puzzle ID: " + puzzle.getID());
+        int puzzleNumber = -1;
+        switch(puzzle.getSize()) {
+            case 5:
+                puzzleNumber = puzzle.getID() + 1;
+                break;
+            case 6:
+                puzzleNumber = puzzle.getID() - sizeOf5x5 + 1;
+                break;
+            case 7:
+                puzzleNumber = puzzle.getID() - sizeOf5x5 - sizeOf6x6 + 1;
+                break;
+        }
+        return puzzleNumber;
     }
 }
