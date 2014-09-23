@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.easyandroidanimations.library.ExplodeAnimation;
+
 
 public class PlayActivity extends ActionBarActivity {
 
@@ -56,8 +58,10 @@ public class PlayActivity extends ActionBarActivity {
                 mGame.setOccupiedCells(numOccupiedCells.intValue());
             }
             if(mGame.isWon()) {
-                Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
                 mGameWon = true;
+                new ExplodeAnimation(mBoard).animate();
+                //Toast.makeText(getApplicationContext(), "You won!", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
