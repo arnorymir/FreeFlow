@@ -139,7 +139,6 @@ public class PlayActivity extends ActionBarActivity {
                         // Set up the next puzzle.
                         Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mGame.getPuzzle());
                         if(nextPuzzle != null) {
-                            Log.i("", "getNextPuzzle returned a puzzle with id: " + nextPuzzle.getID());
                             mBoard.setPuzzle(nextPuzzle);
                             mGame = new Game(nextPuzzle);
                             reset();
@@ -161,16 +160,16 @@ public class PlayActivity extends ActionBarActivity {
     // Toggle if buttons should be enabled or disabled
     private void toggleButtons() {
         if(mPuzzleRepo.isFirstOfItsSize(mGame.getPuzzle())) {
-            mPrevButton.setEnabled(false);
+            mPrevButton.setVisibility(View.INVISIBLE);
         }
         else {
-            mPrevButton.setEnabled(true);
+            mPrevButton.setVisibility(View.VISIBLE);
         }
         if(mPuzzleRepo.isLastOfItsSize(mGame.getPuzzle())) {
-            mNextButton.setEnabled(false);
+            mNextButton.setVisibility(View.INVISIBLE);
         }
         else {
-            mNextButton.setEnabled(true);
+            mNextButton.setVisibility(View.VISIBLE);
         }
     }
 
