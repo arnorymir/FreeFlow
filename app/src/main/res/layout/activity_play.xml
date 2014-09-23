@@ -6,12 +6,41 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/playLayout"
     tools:context="com.example.flowflow.freeflow.PlayActivity">
 
     <com.example.flowflow.freeflow.Board
         android:id="@+id/playBoard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8px"
         android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/playMoveLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/playBoard"
+        android:layout_alignLeft="@id/playBoard" />
+    <TextView
+        android:id="@+id/playBestLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/playBoard"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/playPipeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/playBoard"
+        android:layout_alignRight="@id/playBoard"/>
+
+    <Button
+        android:id="@+id/playResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playBoard"
+        android:layout_centerHorizontal="true"
+        android:text="@string/reset"/>
 
 </RelativeLayout>

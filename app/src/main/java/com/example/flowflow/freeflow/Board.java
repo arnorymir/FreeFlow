@@ -1,5 +1,6 @@
 package com.example.flowflow.freeflow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -22,6 +24,11 @@ public class Board extends View {
 
     // Dimensions of the board
     private int mSize;
+
+    // Get the activity
+    private Activity mActivity;
+
+    private boolean allowTouch = true;
 
     // Cell dimensions
     private int mCellWidth;
@@ -40,6 +47,7 @@ public class Board extends View {
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mActivity = (Activity)getContext();
         mPaintGrid.setStyle(Paint.Style.STROKE);
         mPaintGrid.setColor(Color.GRAY);
         mPaintDots.setStyle(Paint.Style.FILL);
@@ -62,14 +70,28 @@ public class Board extends View {
     }
 
     // Returns the number of cells occupied by cell paths.
-    public Integer numberOfOccupiedCells() {
-        // Don't count the cells if a path is active, there might be intersections.
-        if(mActiveCellPath != null) {
-            return null;
-        }
+    public int numberOfOccupiedCells() {
         int count = 0;
-        for(CellPath cellPath : mCellPaths) {
-            count += cellPath.length();
+        // If no path is active simply count the length of the paths
+        if(mActiveCellPath == null) {
+            for(CellPath cellPath : mCellPaths) {
+                count += cellPath.length();
+            }
+        }
+        // Otherwise use a more complex counting method.
+        else {
+            count += mActiveCellPath.length();
+            List<Coordinate> activeCoordinates = mActiveCellPath.getCoordinates();
+            for(CellPath cellPath : mCellPaths) {
+                for(Coordinate c : cellPath.getCoordinates()) {
+                    if(activeCoordinates.contains(c)) {
+                        break;
+                    }
+                    else {
+                        count++;
+                    }
+                }
+            }
         }
         return count;
     }
@@ -205,6 +227,11 @@ public class Board extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if(!allowTouch) {
+            return true;
+        }
+
         int x = (int) event.getX();
         int y = (int) event.getY();
         int c = xToCol(x);
@@ -214,10 +241,12 @@ public class Board extends View {
         if(c >= mSize || r >= mSize || c < 0 || r < 0) {
             if(mActiveCellPath != null) {
                 commitActiveCellPath();
+                ((PlayActivity)mActivity).update();
             }
             mFingerCircle = null;
             invalidate();
-            ((PlayActivity)getContext()).update();
+            // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
+            ((PlayActivity)mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
             return true;
         }
         Coordinate coordinate = new Coordinate(c, r);
@@ -227,9 +256,11 @@ public class Board extends View {
                 if(containsDot(coordinate)) {
                     cellPath.reset();
                     cellPath.append(new Coordinate(c, r));
+                    ((PlayActivity)mActivity).updatePipe();
                 }
                 else {
                     cellPath.popToCoordinate(coordinate);
+                    ((PlayActivity)mActivity).updatePipe();
                 }
                 mActiveCellPath = cellPath;
                 mFingerCircle = new Coordinate(x, y);
@@ -243,14 +274,17 @@ public class Board extends View {
                         // Pop the path if the cell is already in it.
                         if(mActiveCellPath.contains(coordinate)) {
                             mActiveCellPath.popToCoordinate(coordinate);
+                            ((PlayActivity)mActivity).updatePipe();
                         }
                         // Otherwise append the cell.
                         else {
                             mActiveCellPath.append(coordinate);
+                            ((PlayActivity)mActivity).updatePipe();
                             // If the cell contains the end dot, commit the path.
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
                                 commitActiveCellPath();
+                                ((PlayActivity)mActivity).update();
                                 mFingerCircle = null;
                             }
                         }
@@ -259,12 +293,15 @@ public class Board extends View {
             }
         }
         else if(event.getAction() == MotionEvent.ACTION_UP) {
-            commitActiveCellPath();
-            mActiveCellPath = null;
+            if(mActiveCellPath != null) {
+                commitActiveCellPath();
+                ((PlayActivity)mActivity).update();
+            }
         }
         // Must always invalidate to keep finger circle smooth.
         invalidate();
-        ((PlayActivity)getContext()).update();
+        // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
+        ((PlayActivity)mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
         return true;
     }
 
@@ -340,9 +377,24 @@ public class Board extends View {
                 CellPath intersectingPath = getCellPathAtCoordinate(c, true);
                 if(intersectingPath != null) {
                     intersectingPath.popPastCoordinate(c);
+                    ((PlayActivity)mActivity).updatePipe();
                 }
             }
             mActiveCellPath = null;
+            ((PlayActivity)getContext()).addMove();
         }
+    }
+
+    public void setAllowTouch(boolean allowed) {
+        allowTouch = allowed;
+    }
+
+    public void reset() {
+        for(CellPath cellPath : mCellPaths) {
+            cellPath.reset();
+        }
+        mActiveCellPath = null;
+        mFingerCircle = null;
+        allowTouch = true;
     }
 }
