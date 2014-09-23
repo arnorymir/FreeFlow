@@ -278,6 +278,7 @@ public class Board extends View {
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
                                 commitActiveCellPath();
+                                ((PlayActivity)mActivity).addMove();
                                 ((PlayActivity)mActivity).update();
                                 mFingerCircle = null;
                             }
@@ -375,7 +376,6 @@ public class Board extends View {
                 }
             }
             mActiveCellPath = null;
-            ((PlayActivity)getContext()).addMove();
         }
     }
 
