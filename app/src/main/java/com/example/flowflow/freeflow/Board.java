@@ -241,6 +241,7 @@ public class Board extends View {
         if(c >= mSize || r >= mSize || c < 0 || r < 0) {
             if(mActiveCellPath != null) {
                 commitActiveCellPath();
+                ((PlayActivity)mActivity).update();
             }
             mFingerCircle = null;
             invalidate();

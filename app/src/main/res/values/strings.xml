@@ -13,5 +13,8 @@
     <string name="title_activity_high_scores">HighScoresActivity</string>
     <string name="title_activity_play">PlayActivity</string>
     <string name="reset">Reset</string>
+    <string name="nextPuzzle">Next puzzle</string>
+    <string name="quit">Quit</string>
+    <string name="solveAgain">Solve again</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.example.flowflow.freeflow;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +24,6 @@ public class PlayActivity extends ActionBarActivity {
     private TextView mPipeLabel;
     private Button mResetButton;
     private Game mGame;
-    private boolean mGameWon;
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
 
     @Override
@@ -37,7 +38,6 @@ public class PlayActivity extends ActionBarActivity {
         mBoard = (Board) findViewById(R.id.playBoard);
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
-        mGameWon = false;
 
         // Move label
         mMoveLabel = (TextView) findViewById(R.id.playMoveLabel);
@@ -56,11 +56,7 @@ public class PlayActivity extends ActionBarActivity {
         mResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mGame.reset();
-                mBoard.reset();
-                mBoard.invalidate();
-                updatePipe();
-                updateMoves();
+                reset();
             }
         });
     }
@@ -88,14 +84,11 @@ public class PlayActivity extends ActionBarActivity {
     public void update() {
         updateMoves();
         updatePipe();
-        if(!mGameWon) {
-            int numOccupiedCells = mBoard.numberOfOccupiedCells();
-            mGame.setOccupiedCells(numOccupiedCells);
-            if(mGame.isWon()) {
-                mGameWon = true;
-                Log.i("", "Won");
-                mBoard.setAllowTouch(false);
-            }
+        int numOccupiedCells = mBoard.numberOfOccupiedCells();
+        mGame.setOccupiedCells(numOccupiedCells);
+        if(mGame.isWon()) {
+            mBoard.setAllowTouch(false);
+            displayDialog();
         }
     }
 
@@ -109,5 +102,30 @@ public class PlayActivity extends ActionBarActivity {
 
     public void addMove() {
         mGame.addMove();
+    }
+
+    private void displayDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Nice!")
+                .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!")
+                .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(R.string.solveAgain, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        reset();
+                    }
+                })
+                .show();
+    }
+
+    private void reset() {
+        mGame.reset();
+        mBoard.reset();
+        mBoard.invalidate();
+        updateMoves();
+        updatePipe();
     }
 }
