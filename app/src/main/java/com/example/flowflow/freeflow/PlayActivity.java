@@ -17,6 +17,8 @@ public class PlayActivity extends ActionBarActivity {
 
     private Board mBoard;
     private TextView mMoveLabel;
+    private TextView mBestLabel;
+    private TextView mPipeLabel;
     private Game mGame;
     private boolean mGameWon;
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
@@ -25,17 +27,27 @@ public class PlayActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        mBoard = (Board) findViewById(R.id.playBoard);
 
         int id = getIntent().getExtras().getInt("Id");
         Puzzle puzzle = puzzleRepo.mPuzzles.get(id);
 
+        // Board
+        mBoard = (Board) findViewById(R.id.playBoard);
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
         mGameWon = false;
 
+        // Move label
         mMoveLabel = (TextView) findViewById(R.id.playMoveLabel);
-        mMoveLabel.setText("Moves: " + mGame.getMoves());
+        updateMoves();
+
+        // Best label
+        mBestLabel = (TextView) findViewById(R.id.playBestLabel);
+        mBestLabel.setText("Best: -");
+
+        // Pipe label
+        mPipeLabel = (TextView) findViewById(R.id.playPipeLabel);
+        updatePipe();
     }
 
 
@@ -59,17 +71,24 @@ public class PlayActivity extends ActionBarActivity {
     }
 
     public void update() {
-        mMoveLabel.setText("Moves: " + mGame.getMoves());
+        updateMoves();
+        updatePipe();
         if(!mGameWon) {
-            Integer numOccupiedCells = mBoard.numberOfOccupiedCells();
-            if(numOccupiedCells != null) {
-                mGame.setOccupiedCells(numOccupiedCells.intValue());
-            }
+            int numOccupiedCells = mBoard.numberOfOccupiedCells();
+            mGame.setOccupiedCells(numOccupiedCells);
             if(mGame.isWon()) {
                 mGameWon = true;
-                new ExplodeAnimation(mBoard).animate();
+                Log.i("", "Won");
             }
         }
+    }
+
+    public void updateMoves() {
+        mMoveLabel.setText("Moves: " + mGame.getMoves());
+    }
+
+    public void updatePipe() {
+        mPipeLabel.setText("Pipe: " + mBoard.numberOfOccupiedCells() + " / " + mGame.getPuzzle().getSize() * mGame.getPuzzle().getSize());
     }
 
     public void addMove() {
