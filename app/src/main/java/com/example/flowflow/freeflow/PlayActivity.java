@@ -15,17 +15,22 @@ public class PlayActivity extends ActionBarActivity {
     private Board mBoard;
     private Game mGame;
     private boolean mGameWon;
+    private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         mBoard = (Board) findViewById(R.id.playBoard);
-        int size = getIntent().getExtras().getInt("BoardSize");
+        int id = getIntent().getExtras().getInt("Id");
+
+
 
         // Create example puzzle instance
-        Dot[] dots = new Dot[]{new Dot(0, 0, 0), new Dot(0, size - 1, 0), new Dot(1, 0, 1), new Dot(1, size - 1, 1), new Dot(2, 0, 2), new Dot(size-1, size - 1, 2)};
-        Puzzle puzzle = new Puzzle(size, dots);
+
+        // Puzzle puzzle = new Puzzle(1,size, dots);
+        Puzzle puzzle = puzzleRepo.mPuzzles.get(id);
+
         mBoard.setPuzzle(puzzle);
         mGame = new Game(puzzle);
         mGameWon = false;

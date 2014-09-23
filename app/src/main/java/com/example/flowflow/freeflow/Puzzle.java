@@ -11,11 +11,13 @@ import java.util.HashMap;
  */
 public class Puzzle {
 
+    private int mID;
     private int mSize;
     private int mNumColors;
     private Dot[] mDots;
 
-    public Puzzle(int size, Dot[] dots) {
+    public Puzzle(int ID, int size, Dot[] dots) {
+        mID = ID;
         mSize = size;
         mNumColors = dots.length / 2;
         mDots = dots;

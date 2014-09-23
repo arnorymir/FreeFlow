@@ -8,7 +8,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -19,7 +18,7 @@ import java.util.List;
  */
 public class Board extends View {
 
-    private int[] colors = {Color.BLUE, Color.RED, Color.GREEN};
+    private int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
 
     // Dimensions of the board
     private int mSize;

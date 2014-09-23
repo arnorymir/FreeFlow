@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<packs>
+    <pack id="1">
+        <name>Regular Pack</name>
+        <description>5x5 through 6x6 puzzles</description>
+        <file>packs/regular.xml</file>
+    </pack>
+    <pack id="2">
+        <name>7 x 7 Mania</name>
+        <description>7x7</description>
+        <file>packs/mania.xml</file>
+    </pack>
+</packs>
