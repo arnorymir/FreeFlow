@@ -130,6 +130,10 @@ public class PuzzleRepo {
     }
 
     public int getPuzzleNumber(Puzzle puzzle) {
+<<<<<<< Updated upstream
+=======
+        Log.i("", "Puzzle ID: " + puzzle.getID());
+>>>>>>> Stashed changes
         int puzzleNumber = -1;
         switch(puzzle.getSize()) {
             case 5:
@@ -144,6 +148,7 @@ public class PuzzleRepo {
         }
         return puzzleNumber;
     }
+<<<<<<< Updated upstream
 
     public Puzzle getFirstPuzzleOfSize(int size) {
         switch(size) {
@@ -157,4 +162,6 @@ public class PuzzleRepo {
                 return null;
         }
     }
+=======
+>>>>>>> Stashed changes
 }
