@@ -11,6 +11,7 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
       }
+
     @Override
     public Fragment getItem(int i) {
         switch (i) {
@@ -24,7 +25,13 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         return null;
     }
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+    @Override
     public int getCount() {
         return 3; //Number of Tabs
     }
+
 }

@@ -2,7 +2,8 @@ package com.example.flowflow.freeflow;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,12 +18,14 @@ public class ButtonAdapter extends BaseAdapter {
     private SoundEffects soundEffects = SoundEffects.getInstance();
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private DbHelper dbHelper;
 
     public ButtonAdapter(Context c,int count, int size) {
         soundEffects.loadSounds(c);
         mContext = c;
         mCount = count;
         mSize = size;
+        dbHelper = new DbHelper( c );
     }
 
     public int getCount() {
@@ -59,6 +62,7 @@ public class ButtonAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
+
                     Intent intent = new Intent(mContext, PlayActivity.class);
                     intent.putExtra("Id", v.getId());
                     mContext.startActivity(intent);
@@ -68,7 +72,15 @@ public class ButtonAdapter extends BaseAdapter {
         } else {
             button = (Button) convertView;
         }
-        button.setText(Integer.toString(position + 1));
+        notifyDataSetChanged();
+        if (dbHelper.isFinished(button.getId())) {
+            button.setBackgroundColor(Color.GREEN);
+        }
+        else {
+            button.setBackgroundColor(Color.RED);
+         }
+         button.setText(Integer.toString(position + 1));
+
         return button;
     }
 
