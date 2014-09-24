@@ -17,5 +17,10 @@
     <string name="quit">Quit</string>
     <string name="solveAgain">Solve again</string>
     <string name="next">>></string>
-    <string name="previous">&#60;&#60;</string>
+    <string name="previous">&lt;&lt;</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="title_activity_time_trial">TimeTrialActivity</string>
+
 </resources>

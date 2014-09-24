@@ -38,4 +38,8 @@ public class Puzzle {
     public int getID() {
         return mID;
     }
+
+    public void setID(int id) {
+        mID = id;
+    }
 }

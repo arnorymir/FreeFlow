@@ -112,7 +112,9 @@ public class MenuActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivityForResult(i, RESULT_OK);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -129,8 +131,7 @@ public class MenuActivity extends ActionBarActivity {
             int sizeOf7x7 = mPuzzleRepo.sizeOf7x7;
 
             NodeList nList = doc.getElementsByTagName( "puzzle" );
-            for ( int c=0; c < nList.getLength(); c++ ) {
-
+            for (int c = 0; c < nList.getLength(); c++) {
                 Node nNode = nList.item(c);
                 if ( nNode.getNodeType() == Node.ELEMENT_NODE ) {
                     Element eNode = (Element) nNode;
@@ -172,13 +173,16 @@ public class MenuActivity extends ActionBarActivity {
                             break;
                         case 7:
                             sizeOf7x7++;
+                            // This is a dirty workaround for an unexplainable bug.
+                            c = 14;
                             break;
                     }
-
+              
                     //adding new puzzle. c is the id of the puzzle.
                     puzzles.add(new Puzzle(c, Integer.parseInt(size), returnDot));
                 }
             }
+
             mPuzzleRepo.sizeOf5x5 = sizeOf5x5;
             mPuzzleRepo.sizeOf6x6 = sizeOf6x6;
             mPuzzleRepo.sizeOf7x7 = sizeOf7x7;

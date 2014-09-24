@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Board extends View {
 
-    private int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
+    private int[] colors;
 
     // Dimensions of the board
     private int mSize;
@@ -241,12 +241,16 @@ public class Board extends View {
         if(c >= mSize || r >= mSize || c < 0 || r < 0) {
             if(mActiveCellPath != null) {
                 commitActiveCellPath();
-                ((PlayActivity)mActivity).update();
+                if(mActivity.getClass().equals(PlayActivity.class)) {
+                    ((PlayActivity) mActivity).update();
+                }
             }
             mFingerCircle = null;
             invalidate();
             // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
-            ((PlayActivity)mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+            if(mActivity.getClass().equals(PlayActivity.class)) {
+                ((PlayActivity) mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+            }
             return true;
         }
         Coordinate coordinate = new Coordinate(c, r);
@@ -256,11 +260,15 @@ public class Board extends View {
                 if(containsDot(coordinate)) {
                     cellPath.reset();
                     cellPath.append(new Coordinate(c, r));
-                    ((PlayActivity)mActivity).updatePipe();
+                    if(mActivity.getClass().equals(PlayActivity.class)) {
+                        ((PlayActivity)mActivity).updatePipe();
+                    }
                 }
                 else {
                     cellPath.popToCoordinate(coordinate);
-                    ((PlayActivity)mActivity).updatePipe();
+                    if(mActivity.getClass().equals(PlayActivity.class)) {
+                        ((PlayActivity)mActivity).updatePipe();
+                    }
                 }
                 mActiveCellPath = cellPath;
                 mFingerCircle = new Coordinate(x, y);
@@ -274,19 +282,31 @@ public class Board extends View {
                         // Pop the path if the cell is already in it.
                         if(mActiveCellPath.contains(coordinate)) {
                             mActiveCellPath.popToCoordinate(coordinate);
-                            ((PlayActivity)mActivity).updatePipe();
+                            if(mActivity.getClass().equals(PlayActivity.class)) {
+                                ((PlayActivity) mActivity).updatePipe();
+                            }
                         }
                         // Otherwise append the cell.
                         else {
                             mActiveCellPath.append(coordinate);
-                            ((PlayActivity)mActivity).updatePipe();
+                            if(mActivity.getClass().equals(PlayActivity.class)) {
+                                ((PlayActivity) mActivity).updatePipe();
+                            }
                             // If the cell contains the end dot, commit the path.
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
                                 sp.play(soundEffects.soundIds[0], 1, 1, 1, 0, (float)1.2);
                                 commitActiveCellPath();
-                                ((PlayActivity)mActivity).addMove();
-                                ((PlayActivity)mActivity).update();
+                                if(mActivity.getClass().equals(PlayActivity.class)) {
+                                    ((PlayActivity) mActivity).addMove();
+                                    ((PlayActivity) mActivity).update();
+                                }
+                                // If it's a time trial, check if the puzzle is solved an notify the activity.
+                                else if(mActivity.getClass().equals(TimeTrialActivity.class)) {
+                                    if(numberOfOccupiedCells() == mSize * mSize) {
+                                        ((TimeTrialActivity)mActivity).solvedPuzzle();
+                                    }
+                                }
                                 mFingerCircle = null;
                             }
                         }
@@ -297,13 +317,17 @@ public class Board extends View {
         else if(event.getAction() == MotionEvent.ACTION_UP) {
             if(mActiveCellPath != null) {
                 commitActiveCellPath();
-                ((PlayActivity)mActivity).update();
+                if(mActivity.getClass().equals(PlayActivity.class)) {
+                    ((PlayActivity) mActivity).update();
+                }
             }
         }
         // Must always invalidate to keep finger circle smooth.
         invalidate();
         // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
-        ((PlayActivity)mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+        if(mActivity.getClass().equals(PlayActivity.class)) {
+            ((PlayActivity) mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+        }
         return true;
     }
 
@@ -379,7 +403,9 @@ public class Board extends View {
                 CellPath intersectingPath = getCellPathAtCoordinate(c, true);
                 if(intersectingPath != null) {
                     intersectingPath.popPastCoordinate(c);
-                    ((PlayActivity)mActivity).updatePipe();
+                    if(mActivity.getClass().equals(PlayActivity.class)) {
+                        ((PlayActivity) mActivity).updatePipe();
+                    }
                 }
             }
             mActiveCellPath = null;
@@ -392,5 +418,17 @@ public class Board extends View {
         }
         mActiveCellPath = null;
         mFingerCircle = null;
+    }
+
+    public void setColorScheme(String colorScheme) {
+        if(colorScheme.equals("Rainbow")) {
+            colors = new int[]{Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
+        }
+        else if(colorScheme.equals("50 Shades of Grey")) {
+            int GRAY = Color.parseColor("#B0B0B0");
+            int GRAY2 = Color.parseColor("#585858");
+            int DORIANGRAY = Color.parseColor("#282828");
+            colors = new int[]{Color.GRAY, Color.DKGRAY, Color.LTGRAY, GRAY, GRAY2, DORIANGRAY, Color.BLACK};
+        }
     }
 }

@@ -128,4 +128,33 @@ public class PuzzleRepo {
         }
         return puzzle.getID() == maxIndex;
     }
+
+    public int getPuzzleNumber(Puzzle puzzle) {
+        int puzzleNumber = -1;
+        switch(puzzle.getSize()) {
+            case 5:
+                puzzleNumber = puzzle.getID() + 1;
+                break;
+            case 6:
+                puzzleNumber = puzzle.getID() - sizeOf5x5 + 1;
+                break;
+            case 7:
+                puzzleNumber = puzzle.getID() - sizeOf5x5 - sizeOf6x6 + 1;
+                break;
+        }
+        return puzzleNumber;
+    }
+
+    public Puzzle getFirstPuzzleOfSize(int size) {
+        switch(size) {
+            case 5:
+                return mPuzzles.get(0);
+            case 6:
+                return mPuzzles.get(sizeOf5x5);
+            case 7:
+                return mPuzzles.get(sizeOf5x5 + sizeOf6x6);
+            default:
+                return null;
+        }
+    }
 }

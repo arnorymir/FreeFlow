@@ -2,8 +2,6 @@ package com.example.flowflow.freeflow;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -61,7 +59,6 @@ public class ButtonAdapter extends BaseAdapter {
                     Intent intent = new Intent(mContext, PlayActivity.class);
                     intent.putExtra("Id", v.getId());
                     mContext.startActivity(intent);
-                    //startActivity(intent);
                 }
             });
 
@@ -69,8 +66,6 @@ public class ButtonAdapter extends BaseAdapter {
             button = (Button) convertView;
         }
         button.setText(Integer.toString(position + 1));
-
-
         return button;
     }
 
