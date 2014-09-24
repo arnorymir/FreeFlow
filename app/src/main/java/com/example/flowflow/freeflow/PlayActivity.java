@@ -107,6 +107,7 @@ public class PlayActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        updateBestAndSolved();
 
         // Set the selected color scheme.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
