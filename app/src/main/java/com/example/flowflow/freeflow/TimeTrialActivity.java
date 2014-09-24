@@ -42,7 +42,7 @@ public class TimeTrialActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         shouldVibrate = prefs.getBoolean("prefVibration",true);
 
-        TIME = 10;
+        TIME = 30;
         mPuzzleRepo = PuzzleRepo.getInstance();
         mSolvedPuzzles = 0;
 
