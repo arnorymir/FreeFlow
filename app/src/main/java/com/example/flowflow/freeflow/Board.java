@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Parcelable;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;

@@ -93,6 +93,7 @@ public class TimeTrialActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i("", "On destroy");
         // Prevent the timer to crash the app later.
         if(mTimeLabel != null) {
             mTimer.cancel();
