@@ -2,6 +2,9 @@ package com.example.flowflow.freeflow;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,11 +90,10 @@ public class PlayActivity extends ActionBarActivity {
         toggleButtons();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.play, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -101,7 +103,9 @@ public class PlayActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivityForResult(i, RESULT_OK);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -146,19 +150,19 @@ public class PlayActivity extends ActionBarActivity {
             dialog
                 .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!")
                 .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    goToNextPuzzle();
-                }
-            });
+                    public void onClick(DialogInterface dialog, int which) {
+                        goToNextPuzzle();
+                    }
+                });
         }
         else {
             dialog
                 .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!\nThis was the last puzzle.")
                 .setPositiveButton(R.string.quit, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
         }
         dialog.show();
     }

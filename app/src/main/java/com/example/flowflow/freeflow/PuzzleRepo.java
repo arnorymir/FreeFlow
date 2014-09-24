@@ -130,7 +130,6 @@ public class PuzzleRepo {
     }
 
     public int getPuzzleNumber(Puzzle puzzle) {
-        Log.i("", "Puzzle ID: " + puzzle.getID());
         int puzzleNumber = -1;
         switch(puzzle.getSize()) {
             case 5:
