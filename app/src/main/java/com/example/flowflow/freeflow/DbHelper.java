@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "PUZZLES_DB";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public static final String TablePuzzle = "puzzles";
     public static final String[] TablePuzzleCols = { "puzzleId", "moves", "finished"};
