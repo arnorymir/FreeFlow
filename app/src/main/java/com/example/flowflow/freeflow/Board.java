@@ -14,6 +14,7 @@ import android.media.SoundPool;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -60,7 +61,6 @@ public class Board extends View {
         mPaintGrid.setColor(Color.GRAY);
         mPaintDots.setStyle(Paint.Style.FILL);
         mPaintPath.setStyle(Paint.Style.STROKE);
-        mPaintPath.setStrokeWidth(32);
         mPaintPath.setStrokeCap(Paint.Cap.ROUND);
         mPaintPath.setStrokeJoin(Paint.Join.ROUND);
         mPaintPath.setAntiAlias(true);
@@ -140,6 +140,7 @@ public class Board extends View {
         int strokeWidth = Math.max(1, (int) mPaintGrid.getStrokeWidth());
         mCellWidth = (xNew - getPaddingLeft() - getPaddingRight() - strokeWidth) / mSize;
         mCellHeight = (yNew - getPaddingTop() - getPaddingBottom() - strokeWidth) / mSize;
+        mPaintPath.setStrokeWidth((float)mCellWidth/4);
     }
 
     @Override
@@ -440,7 +441,8 @@ public class Board extends View {
 
     public void setColorScheme(String colorScheme) {
         if(colorScheme.equals("Rainbow")) {
-            colors = new int[]{Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
+            int ORANGE = Color.parseColor("#FFA500");
+            colors = new int[]{Color.BLUE, Color.RED, Color.GREEN, ORANGE, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
         }
         else if(colorScheme.equals("50 Shades of Grey")) {
             int GRAY = Color.parseColor("#B0B0B0");
