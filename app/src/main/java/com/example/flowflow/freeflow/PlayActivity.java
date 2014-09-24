@@ -33,6 +33,7 @@ public class PlayActivity extends ActionBarActivity {
     private PuzzleRepo mPuzzleRepo = PuzzleRepo.getInstance();
     private SoundEffects soundEffects = SoundEffects.getInstance();
     private Boolean shouldVibrate;
+    private PuzzlesAdapter mPuzzlesAdapter = new PuzzlesAdapter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +138,7 @@ public class PlayActivity extends ActionBarActivity {
         int numOccupiedCells = mBoard.numberOfOccupiedCells();
         mGame.setOccupiedCells(numOccupiedCells);
         if(mGame.isWon()) {
+            mPuzzlesAdapter.updatePuzzle(mGame.getPuzzle().getID(),mGame.getMoves(),true);
             displayDialog();
         }
     }
