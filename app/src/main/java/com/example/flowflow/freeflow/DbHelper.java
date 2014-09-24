@@ -1,8 +1,10 @@
 package com.example.flowflow.freeflow;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -22,6 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String sqlDropTablePuzzles =
             "DROP TABLE IF EXISTS puzzles;";
 
+
     public DbHelper( Context context ) {
         super( context, DB_NAME, null, DB_VERSION );
     }
@@ -36,4 +39,28 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL( sqlDropTablePuzzles );
         onCreate( db );
     }
+
+    public boolean isFinished(int id) {
+
+        String query = "SELECT  * FROM puzzles WHERE puzzleId =" + id ;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        int returnValue = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                returnValue = Integer.parseInt(cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+
+       if(returnValue == 0)
+       {
+           return false;
+       }
+        return true;
+
+    }
+
+
 }
