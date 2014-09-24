@@ -91,9 +91,8 @@ public class TimeTrialActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("", "On Stop");
+    protected void onDestroy() {
+        super.onDestroy();
         // Prevent the timer to crash the app later.
         if(mTimeLabel != null) {
             mTimer.cancel();
