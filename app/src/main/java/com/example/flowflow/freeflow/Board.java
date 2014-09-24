@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Board extends View {
 
-    private int[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
+    private int[] colors;
 
     // Dimensions of the board
     private int mSize;
@@ -394,5 +394,17 @@ public class Board extends View {
         }
         mActiveCellPath = null;
         mFingerCircle = null;
+    }
+
+    public void setColorScheme(String colorScheme) {
+        if(colorScheme.equals("Rainbow")) {
+            colors = new int[]{Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
+        }
+        else if(colorScheme.equals("50 Shades of Grey")) {
+            int GRAY = Color.parseColor("#B0B0B0");
+            int GRAY2 = Color.parseColor("#585858");
+            int DORIANGRAY = Color.parseColor("#282828");
+            colors = new int[]{Color.GRAY, Color.DKGRAY, Color.LTGRAY, GRAY, GRAY2, DORIANGRAY, Color.BLACK};
+        }
     }
 }
