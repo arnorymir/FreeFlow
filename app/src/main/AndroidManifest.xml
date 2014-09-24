@@ -22,28 +22,28 @@
         </activity>
         <activity
             android:name=".GridPickerActivity"
-            android:label="@string/title_activity_grid_picker" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".TimeTrialPickerActivity"
-            android:label="@string/title_activity_time_trial_picker">
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".HighScoresActivity"
-            android:label="@string/title_activity_high_scores" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".PlayActivity"
-            android:label="@string/title_activity_play"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".TimeTrialActivity"
-            android:label="@string/title_activity_time_trial"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
     </application>
