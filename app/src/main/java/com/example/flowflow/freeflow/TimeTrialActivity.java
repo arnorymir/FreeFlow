@@ -42,7 +42,7 @@ public class TimeTrialActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         shouldVibrate = prefs.getBoolean("prefVibration",true);
 
-        TIME = 30;
+        TIME = 10;
         mPuzzleRepo = PuzzleRepo.getInstance();
         mSolvedPuzzles = 0;
 
@@ -88,6 +88,16 @@ public class TimeTrialActivity extends ActionBarActivity {
                 displayTimeoutDialog();
             }
         }.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("", "On Stop");
+        // Prevent the timer to crash the app later.
+        if(mTimeLabel != null) {
+            mTimer.cancel();
+        }
     }
 
     @Override
