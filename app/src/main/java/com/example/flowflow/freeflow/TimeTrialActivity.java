@@ -10,7 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import com.easyandroidanimations.library.Animation;
+import com.easyandroidanimations.library.AnimationListener;
+import com.easyandroidanimations.library.ExplodeAnimation;
 
 
 public class TimeTrialActivity extends ActionBarActivity {
@@ -168,6 +173,17 @@ public class TimeTrialActivity extends ActionBarActivity {
     public void solvedPuzzle() {
         mSolvedPuzzles++;
         mSolvedLabel.setText("Puzzles solved: " + mSolvedPuzzles);
+        showLabels(false);
+        new ExplodeAnimation(mBoard)
+            .setListener(new AnimationListener() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mBoard.setPuzzle(mPuzzle);
+                    mBoard.setVisibility(View.VISIBLE);
+                    showLabels(true);
+                }
+            })
+            .animate();
         if(mPuzzle != null) {
             mPuzzle = mPuzzleRepo.getNextPuzzle(mPuzzle);
         }
@@ -176,6 +192,15 @@ public class TimeTrialActivity extends ActionBarActivity {
             mTimer.cancel();
             return;
         }
-        mBoard.setPuzzle(mPuzzle);
+    }
+
+    // Show and hide labels
+    private void showLabels(boolean show) {
+        int visibility = View.VISIBLE;
+        if(!show) {
+            visibility = View.GONE;
+        }
+        mSolvedLabel.setVisibility(visibility);
+        mTimeLabel.setVisibility(visibility);
     }
 }
