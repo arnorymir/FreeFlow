@@ -255,6 +255,9 @@ public class Board extends View {
             if(mActivity.getClass().equals(PlayActivity.class)) {
                 ((PlayActivity) mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
             }
+            else if(mActivity.getClass().equals(TimeTrialActivity.class)) {
+                ((TimeTrialActivity) mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+            }
             return true;
         }
         Coordinate coordinate = new Coordinate(c, r);
@@ -334,6 +337,9 @@ public class Board extends View {
         // Need to invalidate the whole view to allow the finger circle to be drawn outside the board.
         if(mActivity.getClass().equals(PlayActivity.class)) {
             ((PlayActivity) mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
+        }
+        else if(mActivity.getClass().equals(TimeTrialActivity.class)) {
+            ((TimeTrialActivity) mActivity).getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
         }
         return true;
     }
