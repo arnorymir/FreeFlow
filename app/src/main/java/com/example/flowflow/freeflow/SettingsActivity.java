@@ -24,6 +24,7 @@ import android.util.Log;
 import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
+    private PuzzlesAdapter puzzlesAdapter = new PuzzlesAdapter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,7 @@ public class SettingsActivity extends PreferenceActivity {
                         })
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Do your work here yo.
-                                Log.i("", "Marked all puzzles as unsolved");
+                                puzzlesAdapter.resetAllPuzzlesFinished();
                             }
                         });
                 dialog.show();
