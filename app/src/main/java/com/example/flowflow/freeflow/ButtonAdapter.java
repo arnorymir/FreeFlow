@@ -73,7 +73,7 @@ public class ButtonAdapter extends BaseAdapter {
             button = (Button) convertView;
         }
         notifyDataSetChanged();
-        if (dbHelper.isFinished(position)) {
+        if (dbHelper.isFinished(button.getId())) {
             button.setBackgroundColor(Color.GREEN);
         }
         else {
