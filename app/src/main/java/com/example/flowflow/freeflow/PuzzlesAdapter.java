@@ -51,7 +51,7 @@ public class PuzzlesAdapter {
         openToWrite();
         long value = db.update(DbHelper.TablePuzzle,
                 contentValues,
-                cols[1] + "=" + id, null );
+                cols[0] + "=" + id, null );
         close();
         return value;
     }
