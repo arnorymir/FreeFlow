@@ -84,18 +84,19 @@ public class PuzzlesAdapter {
         return value;
     }
 
-    public Cursor queryStudents() {
+    public Cursor queryPuzzles() {
         openToRead();
         Cursor cursor = db.query( DbHelper.TablePuzzle,
                 DbHelper.TablePuzzleCols, null, null, null, null, null);
         return cursor;
     }
 
-    public Cursor queryStudent( int id) {
+    public Cursor queryPuzzle(int id) {
         openToRead();
         String[] cols = DbHelper.TablePuzzleCols;
         Cursor cursor = db.query( DbHelper.TablePuzzle,
                 cols, cols[0] + "=" + id, null, null, null, null);
         return cursor;
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.flowflow.freeflow;
 import android.content.Intent;
 import org.w3c.dom.Element;
 
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.support.v7.app.ActionBarActivity;
@@ -28,6 +29,8 @@ public class MenuActivity extends ActionBarActivity {
     Button mHighScoresButton;
     Button mSettingsButton;
     private PuzzleRepo mPuzzleRepo = PuzzleRepo.getInstance();
+    private PuzzlesAdapter puzzlesAdapter = new PuzzlesAdapter(this);
+    private Cursor cursor;
 
 
     @Override
@@ -122,6 +125,9 @@ public class MenuActivity extends ActionBarActivity {
 
     private void readPuzzle(InputStream inputStream, List<Puzzle> puzzles) {
         try {
+            cursor = puzzlesAdapter.queryPuzzles();
+            int counter = cursor.getCount();
+            Log.i("","count in menu: " + counter);
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -177,7 +183,13 @@ public class MenuActivity extends ActionBarActivity {
                             c = 14;
                             break;
                     }
-              
+
+                    if(counter == 0)
+                    {
+                        puzzlesAdapter.insertPuzzle(c, 0, false);
+                        puzzlesAdapter.close();
+                    }
+
                     //adding new puzzle. c is the id of the puzzle.
                     puzzles.add(new Puzzle(c, Integer.parseInt(size), returnDot));
                 }
