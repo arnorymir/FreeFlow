@@ -31,6 +31,7 @@ public class TimeTrialActivity extends ActionBarActivity {
     private int TIME; // In seconds.
     private int mScorePerPuzzle;
     private SoundEffects soundEffects = SoundEffects.getInstance();
+    private Boolean shouldVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class TimeTrialActivity extends ActionBarActivity {
         setContentView(R.layout.activity_time_trial);
 
         soundEffects.loadSounds(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        shouldVibrate = prefs.getBoolean("prefVibration",true);
 
         TIME = 30;
         mPuzzleRepo = PuzzleRepo.getInstance();
@@ -95,6 +98,7 @@ public class TimeTrialActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mBoard.setColorScheme(prefs.getString("prefColorScheme", "Rainbow"));
         mBoard.invalidate();
+        shouldVibrate = prefs.getBoolean("prefVibration",true);
     }
 
     @Override
@@ -208,5 +212,8 @@ public class TimeTrialActivity extends ActionBarActivity {
         }
         mSolvedLabel.setVisibility(visibility);
         mTimeLabel.setVisibility(visibility);
+    }
+    public Boolean getShouldVibrate(){
+        return shouldVibrate;
     }
 }

@@ -2,6 +2,7 @@ package com.example.flowflow.freeflow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +12,7 @@ import android.graphics.Region;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -265,12 +267,14 @@ public class Board extends View {
             CellPath cellPath = getCellPathAtCoordinate(coordinate, true);
             if(cellPath != null) {
                 if(containsDot(coordinate)) {
-
-                    if(((PlayActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                     cellPath.reset();
                     cellPath.append(new Coordinate(c, r));
                     if(mActivity.getClass().equals(PlayActivity.class)) {
+                        if(((PlayActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                         ((PlayActivity)mActivity).updatePipe();
+                    }
+                    else if(mActivity.getClass().equals(TimeTrialActivity.class)) {
+                        if(((TimeTrialActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                     }
                 }
                 else {
@@ -304,15 +308,16 @@ public class Board extends View {
                             // If the cell contains the end dot, commit the path.
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
-                                if(((PlayActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                                 soundEffects.sp.play(SoundEffects.soundIds[0], 1, 1, 1, 0, (float)1.2);
                                 commitActiveCellPath();
                                 if(mActivity.getClass().equals(PlayActivity.class)) {
+                                    if(((PlayActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                                     ((PlayActivity) mActivity).addMove();
                                     ((PlayActivity) mActivity).update();
                                 }
                                 // If it's a time trial, check if the puzzle is solved an notify the activity.
                                 else if(mActivity.getClass().equals(TimeTrialActivity.class)) {
+                                    if(((TimeTrialActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                                     if(numberOfOccupiedCells() == mSize * mSize) {
                                         ((TimeTrialActivity)mActivity).solvedPuzzle();
                                     }
