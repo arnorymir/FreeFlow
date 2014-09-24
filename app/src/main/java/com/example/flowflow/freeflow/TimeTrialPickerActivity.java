@@ -1,17 +1,55 @@
 package com.example.flowflow.freeflow;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class TimeTrialPickerActivity extends ActionBarActivity {
+
+    private Button mEasyButton;
+    private Button mMediumButton;
+    private Button mHardButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_trial_picker);
+
+        mEasyButton = (Button) findViewById(R.id.easyButton);
+        mMediumButton = (Button) findViewById(R.id.mediumButton);
+        mHardButton = (Button) findViewById(R.id.hardButton);
+
+        mEasyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TimeTrialActivity.class);
+                intent.putExtra("difficulty", "easy");
+                startActivity(intent);
+            }
+        });
+
+        mMediumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TimeTrialActivity.class);
+                intent.putExtra("difficulty", "medium");
+                startActivity(intent);
+            }
+        });
+
+        mHardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TimeTrialActivity.class);
+                intent.putExtra("difficulty", "hard");
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -40,6 +40,10 @@
             android:name=".PlayActivity"
             android:label="@string/title_activity_play" >
         </activity>
+        <activity
+            android:name=".TimeTrialActivity"
+            android:label="@string/title_activity_time_trial" >
+        </activity>
     </application>
 
 </manifest>
