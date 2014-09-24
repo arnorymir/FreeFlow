@@ -59,13 +59,7 @@ public class PlayActivity extends ActionBarActivity {
 
         // Best label
         mBestLabel = (TextView) findViewById(R.id.playBestLabel);
-        int bestMove = dbHelper.getBestMove(mGame.getPuzzle().getID());
-        if(bestMove == 0) {
-            mBestLabel.setText("Best: -");
-        }
-        else {
-            mBestLabel.setText("Best: " + bestMove);
-        }
+        updateBest();
 
 
         // Pipe label
@@ -165,6 +159,16 @@ public class PlayActivity extends ActionBarActivity {
         mPipeLabel.setText("Pipe: " + mBoard.numberOfOccupiedCells() + " / " + mGame.getPuzzle().getSize() * mGame.getPuzzle().getSize());
     }
 
+    public void updateBest() {
+        int bestMove = dbHelper.getBestMove(mGame.getPuzzle().getID());
+        if(bestMove == 0) {
+            mBestLabel.setText("Best: -");
+        }
+        else {
+            mBestLabel.setText("Best: " + bestMove);
+        }
+    }
+
     public void addMove() {
         mGame.addMove();
     }
@@ -227,6 +231,7 @@ public class PlayActivity extends ActionBarActivity {
         mBoard.reset();
         mBoard.invalidate();
         updateMoves();
+        updateBest();
         updatePipe();
         toggleButtons();
         mTitleLabel.setText("Puzzle " + mPuzzleRepo.getPuzzleNumber(mGame.getPuzzle()));
