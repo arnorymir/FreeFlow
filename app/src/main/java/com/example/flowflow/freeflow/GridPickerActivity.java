@@ -14,6 +14,7 @@ public class GridPickerActivity extends FragmentActivity {
     ViewPager Tab;
     TabPagerAdapter TabAdapter;
     ActionBar actionBar;
+    private SoundEffects soundEffects = SoundEffects.getInstance();
 
 
     @Override
@@ -66,6 +67,12 @@ public class GridPickerActivity extends FragmentActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        soundEffects.loadSounds(this);
     }
 
     @Override

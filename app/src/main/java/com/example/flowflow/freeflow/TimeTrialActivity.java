@@ -29,11 +29,14 @@ public class TimeTrialActivity extends ActionBarActivity {
     private TextView mTimeLabel;
     private int TIME; // In seconds.
     private int mScorePerPuzzle;
+    private SoundEffects soundEffects = SoundEffects.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_trial);
+
+        soundEffects.loadSounds(this);
 
         TIME = 30;
         mPuzzleRepo = PuzzleRepo.getInstance();

@@ -31,12 +31,17 @@ public class PlayActivity extends ActionBarActivity {
     private Button mNextButton;
     private Game mGame;
     private PuzzleRepo mPuzzleRepo = PuzzleRepo.getInstance();
+    private SoundEffects soundEffects = SoundEffects.getInstance();
+    private Boolean shouldVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        soundEffects.loadSounds(this);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        shouldVibrate = prefs.getBoolean("prefVibration",true);
         int id = getIntent().getExtras().getInt("Id");
         Puzzle puzzle = mPuzzleRepo.getPuzzleByID(id);
 
@@ -66,6 +71,7 @@ public class PlayActivity extends ActionBarActivity {
         mResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, (float)0.5);
                 reset();
             }
         });
@@ -75,6 +81,7 @@ public class PlayActivity extends ActionBarActivity {
         mPrevButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundEffects.sp.play(SoundEffects.soundIds[1], 1, 1, 1, 0, (float)1.5);
                 goToPreviousPuzzle();
             }
         });
@@ -84,6 +91,7 @@ public class PlayActivity extends ActionBarActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundEffects.sp.play(SoundEffects.soundIds[1], 1, 1, 1, 0, (float)1.5);
                 goToNextPuzzle();
             }
         });
@@ -97,7 +105,9 @@ public class PlayActivity extends ActionBarActivity {
         // Set the selected color scheme.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mBoard.setColorScheme(prefs.getString("prefColorScheme", "Rainbow"));
+        shouldVibrate = prefs.getBoolean("prefVibration",true);
         mBoard.invalidate();
+        soundEffects.loadSounds(this);
     }
 
     @Override
@@ -161,15 +171,18 @@ public class PlayActivity extends ActionBarActivity {
                 .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!")
                 .setPositiveButton(R.string.nextPuzzle, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
                         goToNextPuzzle();
                     }
                 });
         }
         else {
+            soundEffects.sp.play(SoundEffects.soundIds[3], 1, 1, 1, 0, 1);
             dialog
                 .setMessage("You solved this puzzle in " + mGame.getMoves() + " moves!\nThis was the last puzzle.")
                 .setPositiveButton(R.string.quit, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
                         finish();
                     }
                 });
@@ -219,5 +232,8 @@ public class PlayActivity extends ActionBarActivity {
             mBoard.setPuzzle(nextPuzzle);
             reset();
         }
+    }
+    public Boolean getShouldVibrate(){
+        return shouldVibrate;
     }
 }

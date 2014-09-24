@@ -30,13 +30,12 @@ public class MenuActivity extends ActionBarActivity {
     private PuzzleRepo mPuzzleRepo = PuzzleRepo.getInstance();
 
     private SoundEffects soundEffects = SoundEffects.getInstance();
-    private SoundPool sp = soundEffects.sound(this);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-
+        soundEffects.loadSounds(this);
 
         try {
             List<Puzzle> puzzles = new ArrayList<Puzzle>();
@@ -60,7 +59,7 @@ public class MenuActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                sp.play(soundEffects.soundIds[1], 1, 1, 1, 0, (float)1.2);
+                soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
 
                 Log.d("MenuActivity", "Pressed Play button");
                 Intent intent = new Intent(getApplicationContext(), GridPickerActivity.class);
@@ -70,7 +69,7 @@ public class MenuActivity extends ActionBarActivity {
         mTimeTrialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(soundEffects.soundIds[1], 1, 1, 1, 0, (float)1.2);
+                soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed Time Trial button");
                 Intent intent = new Intent(getApplicationContext(), TimeTrialPickerActivity.class);
                 startActivity(intent);
@@ -79,7 +78,7 @@ public class MenuActivity extends ActionBarActivity {
         mHighScoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(soundEffects.soundIds[1], 1, 1, 1, 0, (float)1.2);
+                soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed High Scores button");
                 Intent intent = new Intent(getApplicationContext(), HighScoresActivity.class);
                 startActivity(intent);
@@ -88,7 +87,7 @@ public class MenuActivity extends ActionBarActivity {
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.play(soundEffects.soundIds[1], 1, 1, 1, 0, (float)1.2);
+                soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
                 Log.d("MenuActivity", "Pressed Settings button");
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
@@ -97,7 +96,11 @@ public class MenuActivity extends ActionBarActivity {
 
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        soundEffects.loadSounds(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

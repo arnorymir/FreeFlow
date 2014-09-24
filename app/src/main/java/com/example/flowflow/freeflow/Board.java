@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,7 +37,6 @@ public class Board extends View {
 
     // Sound effects
     private SoundEffects soundEffects = SoundEffects.getInstance();
-    private SoundPool sp = soundEffects.sound(mActivity);
 
     private Paint mPaintGrid = new Paint();
     private Paint mPaintDots = new Paint();
@@ -48,6 +48,8 @@ public class Board extends View {
     private CellPath[] mCellPaths;
     private CellPath mActiveCellPath = null;
     private Coordinate mFingerCircle = null;
+
+    private Vibrator v;
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -62,6 +64,8 @@ public class Board extends View {
         mPaintPath.setAntiAlias(true);
         mPaintShade.setStyle(Paint.Style.FILL);
         mPaintCircle.setStyle(Paint.Style.FILL);
+        soundEffects.loadSounds(context);
+        v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     public void setPuzzle(Puzzle puzzle) {
@@ -258,6 +262,8 @@ public class Board extends View {
             CellPath cellPath = getCellPathAtCoordinate(coordinate, true);
             if(cellPath != null) {
                 if(containsDot(coordinate)) {
+
+                    if(((PlayActivity)mActivity).getShouldVibrate()) v.vibrate(20);
                     cellPath.reset();
                     cellPath.append(new Coordinate(c, r));
                     if(mActivity.getClass().equals(PlayActivity.class)) {
@@ -295,7 +301,8 @@ public class Board extends View {
                             // If the cell contains the end dot, commit the path.
                             Dot dotAtCoordinate = getDotAtCoordinate(coordinate);
                             if(dotAtCoordinate != null && !coordinate.equals(mActiveCellPath.getFirstCoordinate())) {
-                                sp.play(soundEffects.soundIds[0], 1, 1, 1, 0, (float)1.2);
+                                if(((PlayActivity)mActivity).getShouldVibrate()) v.vibrate(20);
+                                soundEffects.sp.play(SoundEffects.soundIds[0], 1, 1, 1, 0, (float)1.2);
                                 commitActiveCellPath();
                                 if(mActivity.getClass().equals(PlayActivity.class)) {
                                     ((PlayActivity) mActivity).addMove();

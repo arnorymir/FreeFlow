@@ -13,11 +13,12 @@ public class ButtonAdapter extends BaseAdapter {
     private Context mContext;
     private int mCount;
     private int mSize;
-    ;
+    private SoundEffects soundEffects = SoundEffects.getInstance();
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
 
     public ButtonAdapter(Context c,int count, int size) {
+        soundEffects.loadSounds(c);
         mContext = c;
         mCount = count;
         mSize = size;
@@ -56,6 +57,7 @@ public class ButtonAdapter extends BaseAdapter {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    soundEffects.sp.play(SoundEffects.soundIds[2], 1, 1, 1, 0, 1);
                     Intent intent = new Intent(mContext, PlayActivity.class);
                     intent.putExtra("Id", v.getId());
                     mContext.startActivity(intent);
