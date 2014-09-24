@@ -440,7 +440,8 @@ public class Board extends View {
 
     public void setColorScheme(String colorScheme) {
         if(colorScheme.equals("Rainbow")) {
-            colors = new int[]{Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
+            int ORANGE = Color.parseColor("#FFA500");
+            colors = new int[]{Color.BLUE, Color.RED, Color.GREEN, ORANGE, Color.MAGENTA, Color.DKGRAY, Color.CYAN};
         }
         else if(colorScheme.equals("50 Shades of Grey")) {
             int GRAY = Color.parseColor("#B0B0B0");
