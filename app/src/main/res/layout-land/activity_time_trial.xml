@@ -9,17 +9,6 @@
     android:id="@+id/timeTrialLayout"
     tools:context="com.example.flowflow.freeflow.PlayActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/timeTrial"
-        android:textSize="20dp"
-        android:id="@+id/frontText"
-        android:textColor="@color/black"
-        android:layout_weight="0.23"
-        android:layout_alignParentTop="true"/>
-
     <com.example.flowflow.freeflow.Board
         android:id="@+id/timeTrialBoard"
         android:layout_width="fill_parent"
@@ -28,17 +17,27 @@
         android:layout_centerInParent="true"/>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/timeTrial"
+        android:textSize="20dp"
+        android:id="@+id/frontText"
+        android:textColor="@color/black"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@id/timeTrialBoard"/>
+
+    <TextView
         android:id="@+id/solvedLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/timeTrialBoard"
-        android:layout_alignLeft="@id/timeTrialBoard"/>
+        android:layout_below="@id/frontText"
+        android:layout_alignParentLeft="true"/>
 
     <TextView
         android:id="@+id/timeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/timeTrialBoard"
-        android:layout_alignRight="@id/timeTrialBoard"/>
+        android:layout_below="@id/solvedLabel"
+        android:layout_alignParentLeft="true"/>
 
 </RelativeLayout>
