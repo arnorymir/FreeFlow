@@ -20,4 +20,7 @@
         android:entries="@array/colorSchemes"
         android:entryValues="@array/colorSchemeValues"/>
 
+    <Preference android:title="Unsolve puzzles"
+        android:key="clearButton"
+        android:summary="Mark all the puzzles as unsolved"/>
 </PreferenceScreen>
