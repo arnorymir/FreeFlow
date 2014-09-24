@@ -101,6 +101,7 @@ public class TimeTrialActivity extends ActionBarActivity {
         shouldVibrate = prefs.getBoolean("prefVibration",true);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -183,25 +184,29 @@ public class TimeTrialActivity extends ActionBarActivity {
     public void solvedPuzzle() {
         mSolvedPuzzles++;
         mSolvedLabel.setText("Puzzles solved: " + mSolvedPuzzles);
+        if(mPuzzle != null) {
+            Puzzle nextPuzzle = mPuzzleRepo.getNextPuzzle(mPuzzle);
+            if(nextPuzzle != null) {
+                mPuzzle = nextPuzzle;
+            }
+            else {
+                displayAllSolvedDialog();
+                mTimer.cancel();
+                return;
+            }
+
+        }
         showLabels(false);
         new ExplodeAnimation(mBoard)
-            .setListener(new AnimationListener() {
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mBoard.setPuzzle(mPuzzle);
-                    mBoard.setVisibility(View.VISIBLE);
-                    showLabels(true);
-                }
-            })
-            .animate();
-        if(mPuzzle != null) {
-            mPuzzle = mPuzzleRepo.getNextPuzzle(mPuzzle);
-        }
-        if(mPuzzle == null) {
-            displayAllSolvedDialog();
-            mTimer.cancel();
-            return;
-        }
+                .setListener(new AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        mBoard.setPuzzle(mPuzzle);
+                        mBoard.setVisibility(View.VISIBLE);
+                        showLabels(true);
+                    }
+                })
+                .animate();
     }
 
     // Show and hide labels

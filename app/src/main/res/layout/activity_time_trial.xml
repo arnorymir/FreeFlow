@@ -9,6 +9,16 @@
     android:id="@+id/timeTrialLayout"
     tools:context="com.example.flowflow.freeflow.PlayActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:gravity="center"
+        android:text="@string/timeTrial"
+        android:textSize="40dp"
+        android:id="@+id/frontText"
+        android:textColor="@color/black"
+        android:layout_weight="0.23" />
+
     <com.example.flowflow.freeflow.Board
         android:id="@+id/timeTrialBoard"
         android:layout_width="fill_parent"

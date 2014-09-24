@@ -1,28 +1,46 @@
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/easy"
-        android:id="@+id/easyButton"
-        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:gravity="center"
+        android:text="@string/timeTrial"
+        android:textSize="40dp"
+        android:id="@+id/frontText"
+        android:textColor="@color/darkRed"
+        android:layout_weight="0.23" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/medium"
         android:id="@+id/mediumButton"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/easy"
+        android:id="@+id/easyButton"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:layout_above="@id/mediumButton"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hard"
         android:id="@+id/hardButton"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:layout_below="@id/mediumButton"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
