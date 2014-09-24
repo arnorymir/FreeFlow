@@ -2,11 +2,14 @@ package com.example.flowflow.freeflow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.SimpleCursorAdapter;
 
 
 public class ButtonAdapter extends BaseAdapter {
@@ -16,12 +19,14 @@ public class ButtonAdapter extends BaseAdapter {
     private SoundEffects soundEffects = SoundEffects.getInstance();
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private DbHelper dbHelper;
 
     public ButtonAdapter(Context c,int count, int size) {
         soundEffects.loadSounds(c);
         mContext = c;
         mCount = count;
         mSize = size;
+        dbHelper = new DbHelper( c );
     }
 
     public int getCount() {
@@ -67,7 +72,15 @@ public class ButtonAdapter extends BaseAdapter {
         } else {
             button = (Button) convertView;
         }
-        button.setText(Integer.toString(position + 1));
+        if (dbHelper.isfin(position)) {
+            if (mCursor.getInt(2) == 1) {
+                button.setBackgroundColor(Color.GREEN);
+            } else {
+                button.setBackgroundColor(Color.RED);
+            }
+            button.setText(Integer.toString(position + 1));
+        }
+
         return button;
     }
 
