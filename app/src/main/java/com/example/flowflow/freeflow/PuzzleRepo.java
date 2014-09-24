@@ -144,4 +144,17 @@ public class PuzzleRepo {
         }
         return puzzleNumber;
     }
+
+    public Puzzle getFirstPuzzleOfSize(int size) {
+        switch(size) {
+            case 5:
+                return mPuzzles.get(0);
+            case 6:
+                return mPuzzles.get(sizeOf5x5);
+            case 7:
+                return mPuzzles.get(sizeOf5x5 + sizeOf6x6);
+            default:
+                return null;
+        }
+    }
 }

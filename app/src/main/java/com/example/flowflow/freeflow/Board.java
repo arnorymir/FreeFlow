@@ -303,6 +303,12 @@ public class Board extends View {
                                     ((PlayActivity) mActivity).addMove();
                                     ((PlayActivity) mActivity).update();
                                 }
+                                // If it's a time trial, check if the puzzle is solved an notify the activity.
+                                else if(mActivity.getClass().equals(TimeTrialActivity.class)) {
+                                    if(numberOfOccupiedCells() == mSize * mSize) {
+                                        ((TimeTrialActivity)mActivity).solvedPuzzle();
+                                    }
+                                }
                                 mFingerCircle = null;
                             }
                         }
