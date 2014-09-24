@@ -99,4 +99,14 @@ public class PuzzlesAdapter {
         return cursor;
     }
 
+    public boolean isFinished(int id) {
+        openToRead();
+        String[] cols = DbHelper.TablePuzzleCols;
+       /* Cursor mCursor = db.rawQuery(
+                "SELECT id  FROM  puzzles WHERE puzzleId = '"+id+"'" , null);
+                */
+       return false;
+    }
+
+
 }
