@@ -45,7 +45,7 @@ public class SettingsActivity extends PreferenceActivity {
                         })
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                puzzlesAdapter.resetAllPuzzlesFinished();
+                                puzzlesAdapter.resetAllPuzzlesFinishedAndMove();
                             }
                         });
                 dialog.show();

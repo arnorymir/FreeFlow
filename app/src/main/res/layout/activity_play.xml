@@ -25,6 +25,16 @@
         android:layout_centerInParent="true"/>
 
     <TextView
+        android:id="@+id/playSolvedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32dp"
+        android:textColor="#00CC00"
+        android:layout_alignRight="@id/playBoard"
+        android:text="@string/checkmark"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
         android:id="@+id/playMoveLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -18,6 +18,7 @@
     <string name="solveAgain">Solve again</string>
     <string name="next">>></string>
     <string name="previous">&lt;&lt;</string>
+    <string name="checkmark">&#x2713;</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>

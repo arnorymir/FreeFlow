@@ -74,7 +74,7 @@ public class PuzzlesAdapter {
     public long resetAllPuzzlesFinishedAndMove() {
         String[] cols = DbHelper.TablePuzzleCols;
         ContentValues contentValues = new ContentValues();
-        contentValues.put( cols[1], "null");
+        contentValues.put( cols[1], 0);
         contentValues.put( cols[2], "0");
         openToWrite();
         long value = db.update(DbHelper.TablePuzzle,
