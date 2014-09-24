@@ -59,8 +59,21 @@ public class DbHelper extends SQLiteOpenHelper {
            return false;
        }
         return true;
-
     }
+    public int getBestMove(int id) {
 
+        String query = "SELECT  * FROM puzzles WHERE puzzleId =" + id ;
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        int bestMove = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                bestMove = Integer.parseInt(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+
+        return bestMove;
+    }
 }
