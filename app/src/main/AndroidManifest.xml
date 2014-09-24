@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".TimeTrialPickerActivity"
-            android:label="@string/title_activity_time_trial_picker" >
+            android:label="@string/title_activity_time_trial_picker">
         </activity>
         <activity
             android:name=".HighScoresActivity"
@@ -38,11 +38,13 @@
         </activity>
         <activity
             android:name=".PlayActivity"
-            android:label="@string/title_activity_play" >
+            android:label="@string/title_activity_play"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".TimeTrialActivity"
-            android:label="@string/title_activity_time_trial" >
+            android:label="@string/title_activity_time_trial"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
