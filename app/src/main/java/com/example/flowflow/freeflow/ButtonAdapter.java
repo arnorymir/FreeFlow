@@ -2,6 +2,8 @@ package com.example.flowflow.freeflow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +15,7 @@ public class ButtonAdapter extends BaseAdapter {
     private Context mContext;
     private int mCount;
     private int mSize;
+    ;
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
 
@@ -39,8 +42,8 @@ public class ButtonAdapter extends BaseAdapter {
         Button button;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             button = new Button(mContext);
-            button.setLayoutParams(new GridView.LayoutParams(85, 85));
-            button.setPadding(8, 8, 8, 8);
+            button.setLayoutParams(new GridView.LayoutParams(200, 200));
+            button.setPadding(10, 10, 10, 10);
             switch (mSize) {
                 case 5:
                     button.setId(position);
