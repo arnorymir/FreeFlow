@@ -15,6 +15,7 @@ public class Fragment7x7 extends Fragment {
 
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private ButtonAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,8 +26,16 @@ public class Fragment7x7 extends Fragment {
 
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
         // the parameter are context, number of puzzles and size of the board.
-        gridview.setAdapter(new ButtonAdapter(context,puzzleRepo.sizeOf7x7,7));
+        mAdapter = new ButtonAdapter(context,puzzleRepo.sizeOf7x7,7);
+        gridview.setAdapter(mAdapter);
 
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+    }
+
 }

@@ -18,19 +18,25 @@ import java.util.List;
 public class Fragment5x5 extends Fragment {
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private ButtonAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.activity_grid_picker_fragment, container, false);
         Context context = getActivity();
 
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
         // the parameter are context, number of puzzles and size of the board.
-        gridview.setAdapter(new ButtonAdapter(context,puzzleRepo.sizeOf5x5,5));
-
+        mAdapter = new ButtonAdapter(context,puzzleRepo.sizeOf5x5,5);
+        gridview.setAdapter(mAdapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 
 

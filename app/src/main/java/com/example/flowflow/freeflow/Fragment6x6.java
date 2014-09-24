@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 public class Fragment6x6 extends Fragment {
 
     private PuzzleRepo puzzleRepo = PuzzleRepo.getInstance();
+    private ButtonAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,8 +25,16 @@ public class Fragment6x6 extends Fragment {
 
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
         // the parameter are context, number of puzzles and size of the board.
-        gridview.setAdapter(new ButtonAdapter(context,puzzleRepo.sizeOf6x6, 6));
+        mAdapter = new ButtonAdapter(context,puzzleRepo.sizeOf6x6, 6);
+        gridview.setAdapter(mAdapter);
 
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+    }
+
 }

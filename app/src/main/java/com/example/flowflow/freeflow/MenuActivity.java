@@ -87,6 +87,10 @@ public class MenuActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        // No high scores for now
+        mHighScoresButton.setVisibility(View.GONE);
+
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
