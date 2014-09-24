@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class PlayActivity extends ActionBarActivity {
     private SoundEffects soundEffects = SoundEffects.getInstance();
     private Boolean shouldVibrate;
     private PuzzlesAdapter mPuzzlesAdapter = new PuzzlesAdapter(this);
+    private DbHelper dbHelper = new DbHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,14 @@ public class PlayActivity extends ActionBarActivity {
 
         // Best label
         mBestLabel = (TextView) findViewById(R.id.playBestLabel);
-        mBestLabel.setText("Best: -");
+        int bestMove = dbHelper.getBestMove(mGame.getPuzzle().getID());
+        if(bestMove == 0) {
+            mBestLabel.setText("Best: -");
+        }
+        else {
+            mBestLabel.setText("Best: " + bestMove);
+        }
+
 
         // Pipe label
         mPipeLabel = (TextView) findViewById(R.id.playPipeLabel);
