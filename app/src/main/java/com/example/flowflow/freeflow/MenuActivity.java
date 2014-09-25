@@ -1,5 +1,7 @@
 package com.example.flowflow.freeflow;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import org.w3c.dom.Element;
 
@@ -115,6 +117,26 @@ public class MenuActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                .setTitle("Really?")
+                .setMessage("Are you sure you want leave FreeFlow")
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+
+                    }
+                })
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                });
+        dialog.show();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
